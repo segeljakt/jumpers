@@ -10,7 +10,7 @@
 
 block* new_block(int state, int (*action)(char map[][MAP_WIDTH], block ***blockMap, player *p, unit **u, int x, int y))
 {
-	block* b = malloc(sizeof(new_block));
+	block* b = malloc(sizeof(block));
 	b->state = state;
 	b->action = action;
 	return b;

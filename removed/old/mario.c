@@ -1,4 +1,20 @@
+/******************************************************************************
+*     File Name           :     main.c                                        *
+*     Created By          :     Klas Segeljakt                                *
+*     Creation Date       :     [2016-10-23 13:23]                            *
+*     Last Modified       :     [2016-10-30 00:35]                     *
+*     Description         :     Main file of terminal-mario.                  *
+******************************************************************************/
+/* Native */
 #include <ncurses.h>
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+#include <time.h>
+/* Custom */
 #include "config.h"
 #include "player.h"
 #include "players.h"
@@ -7,14 +23,27 @@
 #include "block.h"
 #include "blocks.h"
 #include "input.h"
+char **mapfiles = {"../world_1_1"};
+/*****************************************************************************/
+int main(int argc, char *argv[]) {
+    char *mapfile;
+    if(argc > 1) {
+        mapfile = argv[1];
+    } else {
+        mapfile = mapfiles[0];
+    }
+    char run = 1;
+    while(run) {
+        
+    }
+    return 0;
+}
 
-#include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-#include <time.h>
+int parse_map(char *filepath) {
+
+    block *** blockmap = malloc(sizeof(block**))
+
+}
 
 int update(WINDOW *win, char map[][MAP_WIDTH], int input[INPUT_TYPE_COUNT], player *p, unit **punits, block ***blockMap);
 int readMap(char *fileName, char map[][MAP_WIDTH]);
@@ -22,34 +51,31 @@ unit* mapUnits(char map[][MAP_WIDTH], player *p);
 block *** mapBlocks(char map[][MAP_WIDTH]);
 int updateUnits(WINDOW *win, char map[][MAP_WIDTH], player *p, unit **punits);
 
-int main(int argc, char *argv[])
+int mains(int argc, char *argv[])
 {
     int i;
     char map[MAP_HEIGHT][MAP_WIDTH];
 
     readMap("world.txt", map);
     player *p = new_player(marioMovement);
-    fprintf(stderr,"player created\n");
     unit *units = mapUnits(map, p);
-    fprintf(stderr, "units mapped\n");
     block ***blockMap = mapBlocks(map);
-    fprintf(stderr,"blocks mapped\n");
     WINDOW *mario_world;
     int offsetx, offsety;
-    
+
     initscr();
     noecho();
     cbreak();
     curs_set(0);
     nodelay(stdscr, TRUE);
     keypad(stdscr, TRUE);
-    
+
     // printw("Super Mario Terminal v. 0.0  -  Press x to quit...");
     refresh();
-    
+
     offsetx = (COLS - WINDOW_WIDTH) / 2;
     offsety = (LINES - WINDOW_HEIGHT) / 2;
-    
+
     mario_world = newwin(WINDOW_HEIGHT, WINDOW_WIDTH, offsety, offsetx);
     int active = 1;
     flushinp();
@@ -84,9 +110,9 @@ int main(int argc, char *argv[])
 
     flushinp();
     delwin(mario_world);
-    
+
     endwin();
-    
+
     return 0;
 }
 
@@ -96,7 +122,7 @@ int update(WINDOW *win, char map[][MAP_WIDTH], int input[INPUT_TYPE_COUNT], play
     unit *u = *punits;
 
     wclear(win);
-    
+
     for(i = 0; i <= WINDOW_HEIGHT; i++)
     {
         for(j = 0; (j <= WINDOW_WIDTH); j++)
@@ -111,7 +137,7 @@ int update(WINDOW *win, char map[][MAP_WIDTH], int input[INPUT_TYPE_COUNT], play
     updateUnits(win, map, p, punits);
 
     p->movement(map, input, p, punits, blockMap);
-    
+
     mvwaddch(win, 1, 1, 'C');
     mvwaddch(win, 1, 2, 'O');
     mvwaddch(win, 1, 3, 'I');
@@ -188,7 +214,7 @@ int readMap(char *fileName, char map[][MAP_WIDTH])
 {
     int i, j;
     FILE *fp;
-    if((fp = fopen(fileName, "r+")) == NULL) 
+    if((fp = fopen(fileName, "r+")) == NULL)
     {
         printf("No such file\n");
         return -1;
@@ -301,29 +327,3 @@ block*** mapBlocks(char map[][MAP_WIDTH])
     }
     return blockMap;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
