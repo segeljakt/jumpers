@@ -2,7 +2,7 @@
 *     File Name           :     args.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 14:00]                            *
-*     Last Modified       :     [2016-10-30 14:39]                            *
+*     Last Modified       :     [2016-11-03 01:01]                            *
 *     Description         :     Argument parser.                              *
 ******************************************************************************/
 #ifndef ARGS_H
@@ -10,6 +10,16 @@
 /*****************************************************************************/
 #include "src/state/state.h"
 /*****************************************************************************/
-int parse_args(int argc, char *argv[], state_t *state);
+typedef struct args_s args_t;
+/*****************************************************************************/
+struct args_s {
+    int difficulty;         // 'd
+    char *filepath;         // 'f
+    int online;             // 'o
+    int num_players;        // 'p
+};
+/*****************************************************************************/
+args_t *parse_args(int argc, char *argv[]);
+int free_args(args_t *args);
 /*****************************************************************************/
 #endif // ARGS_H

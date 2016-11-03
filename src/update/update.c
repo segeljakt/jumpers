@@ -2,7 +2,7 @@
 *     File Name           :     update.c                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 11:34]                            *
-*     Last Modified       :     [2016-10-30 17:09]                     *
+*     Last Modified       :     [2016-10-30 17:09]                            *
 *     Description         :     Update the game state.                        *
 ******************************************************************************/
 #include "update.h"

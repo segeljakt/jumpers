@@ -2,7 +2,7 @@
 *     File Name           :     state.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:34]                            *
-*     Last Modified       :     [2016-10-30 17:09]                            *
+*     Last Modified       :     [2016-11-03 01:01]                            *
 *     Description         :     Game state.                                   *
 ******************************************************************************/
 #ifndef STATE_H
@@ -16,12 +16,13 @@ typedef struct opts_s opts_t;
 typedef struct state_s state_t;
 /*****************************************************************************/
 struct state_s {
-    map_t map;
+    map_t *map;
     WINDOW *pad;
-    opts_t opts;
+    char *filepath;
+    int difficulty;
     char active;
 };
 /*****************************************************************************/
-state_t *init_state(int argc, char *argv[]);
+state_t *init_state();
 /*****************************************************************************/
 #endif // STATE_H
