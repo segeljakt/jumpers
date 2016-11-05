@@ -1,16 +1,15 @@
 /******************************************************************************
-*     File Name           :     update.h                                      *
+*     File Name           :     gfx.h                                         *
 *     Created By          :     Klas Segeljakt                                *
-*     Creation Date       :     [2016-10-30 11:25]                            *
-*     Last Modified       :     [2016-11-04 10:19]                            *
-*     Description         :     Update the game state.                        *
+*     Creation Date       :     [2016-11-03 20:48]                            *
+*     Last Modified       :     [2016-11-05 12:36]                            *
+*     Description         :     Graphics renderer.                            *
 ******************************************************************************/
-#ifndef UPDATE_H
-#define UPDATE_H
+#ifndef GFX_H
+#define GFX_H
 /*****************************************************************************/
 #include "src/state/state.h"
 /*****************************************************************************/
-int update(state_t *state);
+int render(state_t *state);
 /*****************************************************************************/
-#endif // UPDATE_H
-
+#endif // GFX_H

@@ -2,7 +2,7 @@
 *     File Name           :     cfg.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-28 21:14]                            *
-*     Last Modified       :     [2016-11-02 18:37]                            *
+*     Last Modified       :     [2016-11-05 17:09]                            *
 *     Description         :     Map config.                                   *
 ******************************************************************************/
 #ifndef MAP_CFG_H
@@ -60,9 +60,10 @@ enum EDITOR_CHARS {
     EDITOR_CHAR_SHRUB_M         = 'x',
     EDITOR_CHAR_SHRUB_R         = 'y',
     EDITOR_CHAR_MARIO           = '?'
-}
+};
 /*---------------------------------------------------------------------------*/
 enum CHARS {
+    CHAR_NONE            = ' ',
     CHAR_SHROOM          = 'A',
     CHAR_QUESTION_BLOCK  = 'B',
     CHAR_COIN            = 'C',
@@ -112,17 +113,33 @@ enum CHARS {
     CHAR_SHRUB_M         = 'x',
     CHAR_SHRUB_R         = 'y',
     CHAR_MARIO           = '?'
-}
+};
 /*---------------------------------------------------------------------------*/
-enum COLOR_CODES {
-    COLOR_BLACK = 0,
-    COLOR_RED = 1,
-    COLOR_GREEN = 2,
-    COLOR_YELLOW = 3,
-    COLOR_BLUE = 4,
-    COLOR_MAGENTA = 5,
-    COLOR_CYAN = 6,
-    COLOR_WHITE = 7
-}
+enum COLLISION_TYPES {
+    COLLISION_NONE,
+    COLLISION_NORMAL,
+    COLLISION_PLAYER,
+    COLLISION_DEADLY
+};
+/*---------------------------------------------------------------------------*/
+enum OBJ_TYPES {
+    /* Players */
+    MARIO,
+    /* Enemies */
+    SHROOM,
+    GOOMBA,
+    KOOPA,
+    PIRANHA_FLOWER,
+    /* Items */
+    COIN,
+    STAR,
+    /* Blocks */
+    NORMAL_BLOCK,
+    BREAKABLE_BLOCK,
+};
+/*---------------------------------------------------------------------------*/
+enum STATUS {
+    DEAD
+};
 /*****************************************************************************/
 #endif // GRAPHICS_CFG_H

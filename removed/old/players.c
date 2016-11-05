@@ -12,7 +12,7 @@
 int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block ***blockMap)
 {
     //fprintf(stderr, "g");
-    // printw("z"); 
+    // printw("z");
     float x = p->x;
     float y = p->y;
     if(input[1] == UP && p->onGround)
@@ -57,7 +57,7 @@ int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block
     {
         p->v_y = -MAX_Y_VELOCITY;
     }
-    
+
     p->y += p->v_y;
     p->x += p->v_x;
 
@@ -79,7 +79,7 @@ int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block
     if(p->y >= 0 && p->y < MAP_HEIGHT && x + MARIO_X_OFFSET >= 0 && x + MARIO_X_OFFSET < MAP_WIDTH)
     {
         if(strchr(COLLISION_SET, map[(int)p->y][(int)p->x+MARIO_X_OFFSET]))
-        {    
+        {
             int bX = (int)p->x;
             int bY = (int)p->y;
             if(p->v_y > 0)
@@ -121,7 +121,7 @@ int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block
     if(y >= 0 && y < MAP_HEIGHT && p->x + MARIO_X_OFFSET >= 0 && p->x + MARIO_X_OFFSET < MAP_WIDTH)
     {
         if(strchr(COLLISION_SET, map[(int)p->y][(int)p->x+MARIO_X_OFFSET]))
-        {   
+        {
             if((p->v_y > 0 || p->v_y < 0) && (p->v_x > 0 || p->v_x < 0))
             {
                 p->x = x;
@@ -167,7 +167,7 @@ int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block
                     default:
                         break;
                 }
-            }   
+            }
         }
     }
     // while(u)
@@ -189,7 +189,7 @@ int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block
     //         else
     //         {
     //             p->status = 0;
-    //         }   
+    //         }
     //     }
     //     u = u->next;
     // }
@@ -197,6 +197,6 @@ int marioMovement(char map[][MAP_WIDTH], int input[], player *p, unit **u, block
     {
         p->status = 0;
     }
-    
+
     return 0;
 }

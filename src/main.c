@@ -2,7 +2,7 @@
 *     File Name           :     main.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:33]                            *
-*     Last Modified       :     [2016-11-02 22:20]                            *
+*     Last Modified       :     [2016-11-03 16:57]                            *
 *     Description         :     Game loop.                                    *
 ******************************************************************************/
 #include <ncurses.h>
@@ -11,31 +11,27 @@
 #include "src/input/input.h"
 #include "src/update/update.h"
 #include "src/online/online.h"
+#include "src/gfx/gfx.h"
 /*****************************************************************************/
 int main(int argc, char *argv[]) {
+
+    /* Setup */
     state_t *state = init_state(argc, argv);
 
-    if(state->opts.peer) {
-        if(setup_online(&state) != 0) {
-            return 0;
-        }
-    } else if(state->opts.host) {
-        
-    }else {
-        state->
+    if(state == NULL) {
+        exit(-1);
     }
-    initscr();
 
-    while(read_input(input)) {
-        update(state, input);
-        sync(state);
+    while(read_input(state->map->local_player)) {
+        update(state);
+        serialize(state);
+        synchronize(state);
+        render(state);
         napms(TICKRATE);
     }
 
-    state->active = false;
-
-    endwin();
+    /* Teardown */
+    free_state(state);
 
     return 0;
 }
-
