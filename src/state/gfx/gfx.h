@@ -1,15 +1,23 @@
 /******************************************************************************
 *     File Name           :     gfx.h                                         *
 *     Created By          :     Klas Segeljakt                                *
-*     Creation Date       :     [2016-11-03 20:48]                            *
-*     Last Modified       :     [2016-11-05 12:36]                            *
-*     Description         :     Graphics renderer.                            *
+*     Creation Date       :     [2016-11-09 10:30]                            *
+*     Last Modified       :     [2016-11-09 23:30]                            *
+*     Description         :     Ncurses graphics.                             *
 ******************************************************************************/
 #ifndef GFX_H
 #define GFX_H
 /*****************************************************************************/
-#include "src/state/state.h"
+#include <ncurses.h>
+#include "src/state/map/map.h"
 /*****************************************************************************/
-int render(state_t *state);
+typedef struct gfx_s gfx_t;
+/*****************************************************************************/
+struct gfx_s {
+    WINDOW *pad;
+};
+/*****************************************************************************/
+gfx_t *init_gfx(map_t *map);
+int draw(map_t *map, gfx_t *gfx);
 /*****************************************************************************/
 #endif // GFX_H

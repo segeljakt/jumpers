@@ -2,27 +2,24 @@
 *     File Name           :     state.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:34]                            *
-*     Last Modified       :     [2016-11-05 12:12]                            *
+*     Last Modified       :     [2016-11-09 23:20]                            *
 *     Description         :     Game state.                                   *
 ******************************************************************************/
 #ifndef STATE_H
 #define STATE_H
 /*****************************************************************************/
-#include "src/type.h"
-#include <stdlib.h>
 #include <ncurses.h>
-#include "src/map/map.h"
-#include "src/online/online.h"
+#include "src/state/map/map.h"
+#include "src/state/online/online.h"
+#include "src/state/input/input.h"
+#include "src/state/serialize/serialize.h"
+#include "src/state/gfx/gfx.h"
 /*****************************************************************************/
-struct change_s {
-    void *data;
-    size_t len;
-    change_t *next;
-};
-/*---------------------------------------------------------------------------*/
+typedef struct state_s state_t;
+/*****************************************************************************/
 struct state_s {
     map_t *map;
-    WINDOW *pad;
+    gfx_t *gfx;
     online_t *online;
     change_t *change;
     char *fp;

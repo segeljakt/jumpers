@@ -8,9 +8,12 @@
 #ifndef ONLINE_H
 #define ONLINE_H
 /*****************************************************************************/
-#include <sys/socket.h>         // socket, connect
-#include <netinet/in.h>         // struct sockaddr_in, struct sockaddr
-#include "src/state/state.h"    //
+#include <sys/socket.h>                 // socket, connect
+#include <netinet/in.h>                 // struct sockaddr_in, struct sockaddr
+#include "src/state/serialize/serialize.h"
+/*****************************************************************************/
+typedef struct peer_s peer_t;
+typedef struct online_s online_t;
 /*****************************************************************************/
 struct peer_s {
     char **address;
@@ -26,6 +29,6 @@ struct online_s {
     peer_t *peer;
 };
 /*****************************************************************************/
-int synchronize(state_t *state);
+int synchronize(online_t *online, change_t *change);
 /*****************************************************************************/
 #endif // ONLINE_H

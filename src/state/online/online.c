@@ -6,7 +6,11 @@
 *     Description         :     Peer-to-peer online multiplayer.              *
 ******************************************************************************/
 #include "online.h"
+#include <stdlib.h>
 /*****************************************************************************/
+static void multicast(online_t *online, change_t *change);
+static int receive(online_t *online);
+static int join(online_t *online);
 static const char join_msg = 'j';
 static const char ack_msg = 'a';
 /*****************************************************************************/
@@ -35,10 +39,9 @@ static int join(online_t *online) {
     return 0;
 }
 /*---------------------------------------------------------------------------*/
-int synchronize(state_t *state) {
-    change_t *iter;
-    for(iter = state->change; iter != NULL; iter = iter->next) {
-        multicast(state->online, iter);
+int synchronize(online_t *online, change_t *iter) {
+    for(; iter != NULL; iter = iter->next) {
+        multicast(online, iter);
     }
     return 0;
 }

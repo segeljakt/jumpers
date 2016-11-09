@@ -2,13 +2,13 @@
 *     File Name           :     input.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 00:05]                            *
-*     Last Modified       :     [2016-10-30 11:46]                            *
+*     Last Modified       :     [2016-11-09 10:27]                            *
 *     Description         :     Read input.                                   *
 ******************************************************************************/
 #ifndef INPUT_H
 #define INPUT_H
 /*****************************************************************************/
-#include "src/map/map.h"        // player_t
+#include "src/state/map/obj/unit/player/player.h"        // player_t
 /*****************************************************************************/
 int read_input(player_t *iter);
 /*****************************************************************************/

@@ -2,18 +2,20 @@
 *     File Name           :     unit.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 12:29]                            *
-*     Last Modified       :     [2016-11-09 00:08]                            *
+*     Last Modified       :     [2016-11-09 22:27]                            *
 *     Description         :     Enemy/NPC/player interface                    *
 ******************************************************************************/
 #ifndef UNIT_H
 #define UNIT_H
 /*****************************************************************************/
 #include "../obj.h"
-#include "src/map/obj/block/block.h"
+#include "src/state/map/obj/block/block.h"
 /*****************************************************************************/
-typedef int (*unit_collision_f)(unit_t *player, unit_t *self);
+typedef struct body_s body_t;
 typedef struct vectf_s vectf_t;
 typedef struct vectc_s vectc_t;
+typedef int (*unit_collision_f)(unit_t *player, unit_t *self);
+typedef int (*draw_unit_f)(WINDOW *pad, unit_t *self);
 /*****************************************************************************/
 enum DIRECTIONS {
     LEFT,

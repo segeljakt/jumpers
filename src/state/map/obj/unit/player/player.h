@@ -2,14 +2,17 @@
 *     File Name           :     player.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:17]                            *
-*     Last Modified       :     [2016-11-09 00:25]                            *
+*     Last Modified       :     [2016-11-09 23:20]                            *
 *     Description         :     Player character.                             *
 ******************************************************************************/
 #ifndef PLAYER_H
 #define PLAYER_H
 /*****************************************************************************/
 #include "../unit.h"            // Super-struct
-#include "src/input/keycodes.h"
+#include "src/state/input/keycodes.h"
+/*****************************************************************************/
+typedef struct keys_s keys_t;
+typedef struct player_s player_t;
 /*****************************************************************************/
 struct keys_s {
     int up;

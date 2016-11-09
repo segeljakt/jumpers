@@ -2,15 +2,15 @@
 *     File Name           :     map.c                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-23 14:57]                            *
-*     Last Modified       :     [2016-11-05 10:20]                            *
+*     Last Modified       :     [2016-11-09 23:30]                            *
 *     Description         :     World map.                                    *
 ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "./map.h"
-#include "cfg.h"
-#include "block.h"
+#include "src/cfg.h"
+#include "src/state/map/obj/sprite.h"
 /*****************************************************************************/
 static int read_map(char ***raw_map, int *height, int *width);
 static int parse_map(map_t *map, char **raw_map);
@@ -94,36 +94,6 @@ static int parse_map(map_t *map, char **raw_map) {
         }
     }
     return 0;
-}
-/*****************************************************************************/
-int draw_blocks(WINDOW *pad, block_t **block, int width, int height) {
-    int i;
-    int j;
-
-    for(i = 0; i < height; i++) {
-        for(j = 0; j < width; j++) {
-            block[i][j].draw(pad, &block[i][j]);
-        }
-    }
-    return 0;
-}
-/*****************************************************************************/
-int draw_units(WINDOW *pad, unit_t *unit) {
-    unit_t *iter;
-    for(iter = unit; iter != NULL; iter = iter->next) {
-        iter->draw(pad, iter);
-    }
-    return 0;
-}
-/*****************************************************************************/
-WINDOW *draw_map(map_t *map) {
-    WINDOW *pad = newpad(map->height, map->width);
-
-    draw_blocks(pad, map->block, map->height, map->width);
-    draw_units(pad, (unit_t*)map->player);
-    draw_units(pad, map->unit);
-
-    return pad;
 }
 /*****************************************************************************/
 void free_map(map_t *map) {

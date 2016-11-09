@@ -1,12 +1,12 @@
 /******************************************************************************
-*     File Name           :     cfg.h                                         *
+*     File Name           :     sprite.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-28 21:14]                            *
 *     Last Modified       :     [2016-11-08 23:01]                            *
-*     Description         :     Map config.                                   *
+*     Description         :     Sprite config.                                *
 ******************************************************************************/
-#ifndef MAP_CFG_H
-#define MAP_CFG_H
+#ifndef MAP_SPRITE_H
+#define MAP_SPRITE_H
 /*****************************************************************************/
 #define BLOCKLENGTH 16
 /*****************************************************************************/
@@ -134,11 +134,6 @@ enum OBJ_TYPES {
     /* Blocks */
     INDESTRUCTIBLE,
     DESTRUCTIBLE
-};
-/*---------------------------------------------------------------------------*/
-enum STATUS {
-    INVULNERABLE,
-    DEAD
 };
 /*****************************************************************************/
 #endif // GRAPHICS_CFG_H

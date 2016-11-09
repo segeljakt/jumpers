@@ -2,14 +2,15 @@
 *     File Name           :     args.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 14:00]                            *
-*     Last Modified       :     [2016-11-05 12:12]                            *
+*     Last Modified       :     [2016-11-09 10:27]                            *
 *     Description         :     Argument parser.                              *
 ******************************************************************************/
 #ifndef ARGS_H
 #define ARGS_H
 /*****************************************************************************/
-#include "src/state/state.h"
+typedef struct args_s args_t;
 /*****************************************************************************/
+
 struct args_s {
     int difficulty;         // 'd
     char *fp;               // 'f

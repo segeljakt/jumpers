@@ -6,7 +6,7 @@
 *     Description         :     Read input.                                   *
 ******************************************************************************/
 #include "input.h"
-#include "src/input/keycodes.h"
+#include "src/state/input/keycodes.h"
 /*****************************************************************************/
 //#ifdef __APPLE__
 //#include <ApplicationServices/ApplicationServices.h>

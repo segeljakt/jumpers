@@ -15,6 +15,7 @@ PROJ_DIR = $(shell pwd)
 TARGET = $(PROJ_DIR)/bin/$(BIN)
 #------------------------------------------------------------------------------
 SRC = $(shell find $(PROJ_DIR)/src -name "*.c")
+#SRC := $(filter-out $(PROJ_DIR)/src/online%, $(SRC))
 #------------------------------------------------------------------------------
 #FLAGS += -Wall                          # Show all warnings
 FLAGS += -lncurses                      # Link ncurses library

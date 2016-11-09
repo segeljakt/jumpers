@@ -2,11 +2,12 @@
 *     File Name           :     args.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 14:00]                            *
-*     Last Modified       :     [2016-11-03 01:01]                            *
+*     Last Modified       :     [2016-11-09 22:58]                            *
 *     Description         :     Argument parser.                              *
 ******************************************************************************/
 #include "args.h"
 #include <unistd.h>     // getopt
+#include <stdlib.h>     // calloc
 /*****************************************************************************/
 #define ARGS "pdof"
 /*****************************************************************************/

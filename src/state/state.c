@@ -6,7 +6,7 @@
 *     Description         :     State functions.                              *
 ******************************************************************************/
 #include "state.h"
-#include "src/args/args.h"
+#include "src/state/args/args.h"
 #include <string.h>
 /*****************************************************************************/
 static const char *default_fp = "~/.mario/levels/map_1_1.txt";
@@ -42,12 +42,12 @@ state_t *init_state(int argc, char *argv[]) {
     state->difficulty = args->difficulty;
     /* Draw map */
     setup_scr();
-    state->pad = draw_map(state->map);
+    state->gfx = init_gfx(state->map);
     free_args(args);
     return state;
 }
 /*---------------------------------------------------------------------------*/
-int update(state_t *state) {
+void update(state_t *state) {
     unit_t *iter;
     map_t *map = state->map;
     for(iter = (unit_t*)map->player; iter != NULL; iter = iter->next) {
@@ -56,7 +56,6 @@ int update(state_t *state) {
     for(iter = map->unit; iter != NULL; iter = iter->next) {
         iter->update(iter, (unit_t*)map->player, map->unit, map->block);
     }
-    return 0;
 }
 /*---------------------------------------------------------------------------*/
 void serialize(state_t *state) {

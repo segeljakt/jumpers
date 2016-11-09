@@ -2,16 +2,10 @@
 *     File Name           :     main.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:33]                            *
-*     Last Modified       :     [2016-11-08 14:44]                            *
+*     Last Modified       :     [2016-11-09 23:30]                            *
 *     Description         :     Game loop.                                    *
 ******************************************************************************/
-#include <ncurses.h>
 #include "src/state/state.h"
-#include "src/cfg.h"
-#include "src/input/input.h"
-#include "src/update/update.h"
-#include "src/online/online.h"
-#include "src/gfx/gfx.h"
 /*****************************************************************************/
 int main(int argc, char *argv[]) {
 
@@ -25,8 +19,8 @@ int main(int argc, char *argv[]) {
     while(read_input(state->map->player)) {
         update(state);
         serialize(state);
-        synchronize(state);
-        render(state);
+        synchronize(state->online, state->change);
+        draw(state->map, state->gfx);
         napms(TICKRATE);
     }
 
