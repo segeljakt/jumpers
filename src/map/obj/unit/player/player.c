@@ -2,15 +2,16 @@
 *     File Name           :     player.c                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-02 09:11]                            *
-*     Last Modified       :     [2016-11-05 20:54]                            *
+*     Last Modified       :     [2016-11-09 00:33]                            *
 *     Description         :     Player definition.                            *
 ******************************************************************************/
 #include "player.h"
-#include <stdlib.h>
 /*****************************************************************************/
-static int update(map_t *map, obj_t *obj);
-static int serialize(obj_t *obj);
-static int draw(WINDOW *pad, obj_t *obj);
+static int
+update(unit_t *self, unit_t *player, unit_t *unit, block_t **block);
+static int draw(WINDOW *pad, unit_t *self);
+static int ctop(unit_t *player, unit_t *self);
+static int movement(unit_t *self);
 /*****************************************************************************/
                            /*  PLAYER 1    PLAYER 2  */
 static const char ch[]     = {CHAR_MARIO, CHAR_MARIO};
@@ -21,108 +22,84 @@ static const int  right[]  = {KEY__D,      KEY__RIGHT};
 static const int  sprint[] = {KEY__LSHIFT, KEY__RSHIFT};
 static const int  color[]  = {COLOR_RED,  COLOR_BLUE};
 /*****************************************************************************/
-int new_local_player(map_t *map) {
-    if(map->num_local_players < MAX_LOCAL_PLAYERS) {
-        int p_num = map->num_local_players++;
-        player_t *player = malloc(sizeof(player_t));
+int new_player(int p_num, int x, int y, player_t **head) {
+    player_t *player = malloc(sizeof(player_t));
 
-        player->keys.up     = up[p_num];
-        player->keys.down   = down[p_num];
-        player->keys.left   = left[p_num];
-        player->keys.right  = right[p_num];
-        player->keys.sprint = sprint[p_num];
-        player->body.x      = map->local_player->body.x;
-        player->body.y      = map->local_player->body.y;
-        player->body.d_x    = NONE;
-        player->body.d_y    = NONE;
-        player->body.v_x    = 0;
-        player->body.v_y    = 0;
-        player->update      = update;
-        player->serialize   = serialize;
-        player->draw        = draw;
-        player->next        = map->local_player;
+    player->keys.up     = up[p_num];
+    player->keys.down   = down[p_num];
+    player->keys.left   = left[p_num];
+    player->keys.right  = right[p_num];
+    player->keys.sprint = sprint[p_num];
 
-        map->local_player = player;
-    }
+    player->pos.x       = x;
+    player->pos.y       = y;
+    player->dir.x       = NONE;
+    player->dir.y       = NONE;
+    player->vel.x       = 0;
+    player->vel.y       = 0;
+
+    player->update      = update;
+    player->ctop        = ctop;
+    player->cside       = cnone;        // Default
+    player->cbot        = cnone;        // Default
+//    player->serialize   = serialize;
+    player->draw        = draw;
+    player->next        = (unit_t*)*head;
+
+    *head = player;
+}
+/*---------------------------------------------------------------------------*/
+static int
+update(unit_t *self, unit_t *player, unit_t *unit, block_t **blocks) {
+
+    movement(self);
+    unit_collision(self, player);
+    unit_collision(self, unit);
+    block_collision(self, blocks);
+
     return 0;
 }
 /*---------------------------------------------------------------------------*/
-static int movement(body_t *body, int x, int y) {
-
-    if(body->d_y == UP && body->on_ground)  {
-        body->v_y = -MAX_Y_VELOCITY;
-        body->on_ground = 0;
-    } else if(body->d_x == RIGHT) {
-        body->v_x += (body->v_x < 0)? 0.5:X_ACCELERATION;
-    } else if(body->d_x == LEFT) {
-        body->v_x -= (body->v_x > 0)? 0.5:X_ACCELERATION;
-    } else if(body->on_ground && (body->v_x < 0.25 || body->v_x > -0.25)) {
-        body->v_x /= 1.5;
-    } else if(body->on_ground) {
-        body->v_x /= 1.125;
+static int movement(unit_t *self) {
+    if(self->dir.y == UP && self->on_ground)  {
+        self->vel.y = -MAX_VEL_Y;
+        self->on_ground = 0;
+    } else if(self->dir.x == RIGHT) {
+        self->dir.x += (self->vel.x < 0)? 0.5:X_ACCELERATION;
+    } else if(self->dir.x == LEFT) {
+        self->vel.x -= (self->vel.x > 0)? 0.5:X_ACCELERATION;
+    } else if(self->on_ground && (self->vel.x < 0.25 || self->vel.x > -0.25)) {
+        self->vel.x /= 1.5;
+    } else if(self->on_ground) {
+        self->vel.x /= 1.125;
     }
 
-    body->v_y += GRAVITY;
+    self->vel.y -= GRAVITY;
 
-    body->v_x = (body->v_x > MAX_X_VELOCITY)? body->v_x: MAX_X_VELOCITY;
-    body->v_x = (body->v_x < MAX_X_VELOCITY)? body->v_x:-MAX_X_VELOCITY;
-    body->v_y = (body->v_x > MAX_Y_VELOCITY)? body->v_y: MAX_Y_VELOCITY;
-    body->v_y = (body->v_x < MAX_Y_VELOCITY)? body->v_y:-MAX_Y_VELOCITY;
+    self->vel.x = (self->vel.x > MAX_VEL_X)? self->vel.x: MAX_VEL_X;
+    self->vel.x = (self->vel.x < MAX_VEL_X)? self->vel.x:-MAX_VEL_X;
+    self->vel.y = (self->vel.x > MAX_VEL_Y)? self->vel.y: MAX_VEL_Y;
+    self->vel.y = (self->vel.x < MAX_VEL_Y)? self->vel.y:-MAX_VEL_Y;
 
-    body->y += body->v_y;
-    body->x += body->v_x;
+    self->pre.x = self->pos.x;
+    self->pre.y = self->pos.y;
+
+    self->pos.x += self->vel.x;
+    self->pos.y += self->vel.y;
 
     return 0;
 }
-static int collision(map_t *map, body_t *body, float x, float y) {
-    if(body->y < 0 || body->y >= map->height
-    || body->x < 0 || body->x >= map->width) {
-        return 0;
-    }
-    // X-Collision
-    if(IN_BOUNDS(y, body->x, map->height, map->width)) {
-        if(map->block[(int)y][(int)body->x].collision)
-        switch(map->block[(int)y][(int)body->x].collision->side) {
-            case COLLISION_DEADLY: {
-                return DEAD;
-            }
-            body->v_x = 0;
-            body->x = x;
-        }
-    }
-    // Y-collision
-    if(IN_BOUNDS(body->y, x, map->height, map->width)) {
-        if(map->block[(int)y][(int)body->x].collision) {
-            if(body->v_y > 0) {
-                if(!body->on_ground) {
-                    body->on_ground = 1;
-                    if(body->d_x == NONE) {
-                        body->v_x = 0;
-                    }
-                }
-                body->v_y = 0;
-                body->y = y;
-            } else if(body->v_y < 0) {
-            }
-        }
-    }
+/*---------------------------------------------------------------------------*/
+static int ctop(unit_t *player, unit_t *self) {
+    self->vel.y = 0;
+    player->vel.y = MAX_VEL_Y;
     return 0;
 }
-static int update(map_t *map, mapobj_t* mapobj) {
-    player_t *player = (player_t*)mapobj;
-    body_t *body = &player->body;
-
-    float x = body->x;
-    float y = body->y;
-
-    movement(body, x, y);
-    collision(map, body, x, y);
-
+/*---------------------------------------------------------------------------*/
+static int serialize(unit_t *unit) {
     return 0;
 }
-static int serialize(mapobj_t *mapobj) {
-    return 0;
-}
-static int draw(WINDOW *pad, mapobj_t *mapobj) {
+/*---------------------------------------------------------------------------*/
+static int draw(WINDOW *pad, unit_t *unit) {
     return 0;
 }

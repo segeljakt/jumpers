@@ -2,16 +2,14 @@
 *     File Name           :     player.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:17]                            *
-*     Last Modified       :     [2016-11-05 14:41]                            *
+*     Last Modified       :     [2016-11-09 00:25]                            *
 *     Description         :     Player character.                             *
 ******************************************************************************/
 #ifndef PLAYER_H
 #define PLAYER_H
 /*****************************************************************************/
-#include <ncurses.h>
 #include "../unit.h"            // Super-struct
 #include "src/input/keycodes.h"
-#include "src/type.h"
 /*****************************************************************************/
 struct keys_s {
     int up;
@@ -24,10 +22,8 @@ struct keys_s {
 struct player_s {
     unit_t;
     keys_t keys;
-    int color;
-    player_t *next;
 };
 /*****************************************************************************/
-int new_local_player(map_t *map);
+int new_player(int p_num, int x, int y, player_t **head);
 /*****************************************************************************/
 #endif // PLAYER_H

@@ -15,10 +15,12 @@ static int setup_scr() {
     initscr();
     return 0;
 }
+/*---------------------------------------------------------------------------*/
 static int teardown_scr() {
     endwin();
     return 0;
 }
+/*---------------------------------------------------------------------------*/
 state_t *init_state(int argc, char *argv[]) {
     args_t *args = parse_args(argc, argv);
     state_t *state = malloc(sizeof(state_t));
@@ -31,8 +33,10 @@ state_t *init_state(int argc, char *argv[]) {
         return NULL;
     }
     /* Create players */
+    float x = state->map->player->pos.x;
+    float y = state->map->player->pos.y;
     for(i = 0; i < args->num_players; i++) {
-        new_local_player(state->map);
+        new_player(i, x, y, &state->map->player);
     }
     /* Set difficulty */
     state->difficulty = args->difficulty;
@@ -42,11 +46,23 @@ state_t *init_state(int argc, char *argv[]) {
     free_args(args);
     return state;
 }
-/*****************************************************************************/
+/*---------------------------------------------------------------------------*/
+int update(state_t *state) {
+    unit_t *iter;
+    map_t *map = state->map;
+    for(iter = (unit_t*)map->player; iter != NULL; iter = iter->next) {
+        iter->update(iter, (unit_t*)map->player, map->unit, map->block);
+    }
+    for(iter = map->unit; iter != NULL; iter = iter->next) {
+        iter->update(iter, (unit_t*)map->player, map->unit, map->block);
+    }
+    return 0;
+}
+/*---------------------------------------------------------------------------*/
 void serialize(state_t *state) {
 
 }
-/*****************************************************************************/
+/*---------------------------------------------------------------------------*/
 void free_state(state_t *state) {
     teardown_scr();
     if(state->map) {

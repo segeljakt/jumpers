@@ -2,27 +2,27 @@
 *     File Name           :     block.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:12]                            *
-*     Last Modified       :     [2016-11-05 12:48]                            *
+*     Last Modified       :     [2016-11-09 00:20]                            *
 *     Description         :     Block in map.                                 *
 ******************************************************************************/
 #ifndef BLOCK_H
 #define BLOCK_H
 /*****************************************************************************/
-#include <ncurses.h>
-#include "src/map/obj/obj.h"
-#include "src/map/map.h"
+#include "../obj.h"
 /*****************************************************************************/
-struct collision_s {
-    obj_t *obj;
-    collide_t collide;
-};
-/*---------------------------------------------------------------------------*/
+typedef int (*block_collision_f)(unit_t *player, block_t *self);
+/*****************************************************************************/
 struct block_s {
     obj_t;
-    collision_t collision;
+    block_collision_f ctop;
+    block_collision_f cside;
+    block_collision_f cbot;
+    draw_block_f draw;
+    char has_collision;
 };
 /*****************************************************************************/
-int normal_block_collide(map_t *map, int angle, obj_t *obj);
-int coin_block_collide(map_t *map, int angle, obj_t *obj);
+block_t init_empty_block();
+block_t init_normal_block();
+block_t init_coin_block();
 /*****************************************************************************/
 #endif // BLOCK_H

@@ -2,7 +2,7 @@
 *     File Name           :     type.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-04 20:58]                            *
-*     Last Modified       :     [2016-11-05 14:13]                            *
+*     Last Modified       :     [2016-11-09 00:20]                            *
 *     Description         :     All typedefs.                                 *
 ******************************************************************************/
 #ifndef TYPE_H
@@ -20,13 +20,12 @@ typedef struct player_s player_t;
 typedef struct keys_s keys_t;
 typedef struct unit_s unit_t;
 typedef struct block_s block_t;
-typedef struct collision_s collision_t;
-typedef void obj_t;
 typedef struct body_s body_t;
-typedef struct gfx_s gfx_t;
-typedef int (*update_f)(map_t*, obj_t*);
-typedef int (*serialize_f)(obj_t*);
-typedef int (*draw_f)(WINDOW*, obj_t*);
-typedef int (*collide_f)(obj_t *, int, obj_t*);
+typedef struct obj_s obj_t;
+typedef int (*update_f)(unit_t *, unit_t *, unit_t *, block_t **);
+typedef int (*serialize_f)(unit_t*);
+typedef int (*draw_unit_f)(WINDOW*, unit_t*);
+typedef int (*draw_block_f)(WINDOW*, block_t*);
+typedef int (*collision_f)(unit_t *, unit_t *);
 /*****************************************************************************/
 #endif // TYPE_H

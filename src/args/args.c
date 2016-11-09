@@ -26,7 +26,7 @@ args_t *parse_args(int argc, char *argv[]) {
                 args->difficulty = atoi(optarg);
                 break;
             } case ARG_FILEPATH: {
-                args->filepath = optarg;
+                args->fp = optarg;
                 break;
             } case ARG_ONLINE: {
                 args->online = 1;
@@ -41,7 +41,7 @@ args_t *parse_args(int argc, char *argv[]) {
 }
 /*****************************************************************************/
 int free_args(args_t *args) {
-    free(args->filepath);
+    free(args->fp);
     free(args);
     return 0;
 }

@@ -2,7 +2,7 @@
 *     File Name           :     main.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:33]                            *
-*     Last Modified       :     [2016-11-03 16:57]                            *
+*     Last Modified       :     [2016-11-08 14:44]                            *
 *     Description         :     Game loop.                                    *
 ******************************************************************************/
 #include <ncurses.h>
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 
-    while(read_input(state->map->local_player)) {
+    while(read_input(state->map->player)) {
         update(state);
         serialize(state);
         synchronize(state);

@@ -51,13 +51,11 @@ static int read_map(char ***raw_map, int *height, int *width) {
 static int parse_block(map_t *map, char **raw_map, int i, int j) {
     switch(raw_map[i][j]) {
         case CHAR_NORMAL_BLOCK: {
-            map->block[i][j].ch = CHAR_NORMAL_BLOCK;
-            map->block[i][j].update = normal_block_collision;
+            map->block[i][j] = init_normal_block();
             return 1;
             break;
         } case CHAR_COIN_BLOCK: {
-            map->block[i][j].ch = CHAR_NORMAL_BLOCK;
-            map->block[i][j].update = coin_block_collision;
+            map->block[i][j] = init_coin_block();
             return 1;
             break;
         }
@@ -83,8 +81,7 @@ static int parse_map(map_t *map, char **raw_map) {
         len = strlen(raw_map[i]);
         for(j = 0; j < map->width; j++) {
             if(j > len) {
-                map->block[i][j].ch = CHAR_NONE;
-                map->block[i][j].update = NULL;
+                map->block[i][j] = init_empty_block();
             } else {
                 if(parse_block(map, raw_map, i, j)) {
                     continue;
@@ -111,14 +108,6 @@ int draw_blocks(WINDOW *pad, block_t **block, int width, int height) {
     return 0;
 }
 /*****************************************************************************/
-int draw_players(WINDOW *pad, player_t *player) {
-    player_t *iter;
-    for(iter = player; iter != NULL; iter = iter->next) {
-        iter->draw(pad, iter);
-    }
-    return 0;
-}
-/*****************************************************************************/
 int draw_units(WINDOW *pad, unit_t *unit) {
     unit_t *iter;
     for(iter = unit; iter != NULL; iter = iter->next) {
@@ -131,7 +120,7 @@ WINDOW *draw_map(map_t *map) {
     WINDOW *pad = newpad(map->height, map->width);
 
     draw_blocks(pad, map->block, map->height, map->width);
-    draw_players(pad, map->local_player);
+    draw_units(pad, (unit_t*)map->player);
     draw_units(pad, map->unit);
 
     return pad;

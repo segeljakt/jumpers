@@ -1,16 +1,15 @@
 /******************************************************************************
-*     File Name           :     update.h                                      *
+*     File Name           :     goomba.h                                      *
 *     Created By          :     Klas Segeljakt                                *
-*     Creation Date       :     [2016-10-30 11:25]                            *
-*     Last Modified       :     [2016-11-04 10:19]                            *
-*     Description         :     Update the game state.                        *
+*     Creation Date       :     [2016-11-05 22:35]                            *
+*     Last Modified       :     [2016-11-08 23:25]                            *
+*     Description         :     Goomba npc.                                   *
 ******************************************************************************/
-#ifndef UPDATE_H
-#define UPDATE_H
+#ifndef GOOMBA_H
+#define GOOMBA_H
 /*****************************************************************************/
-#include "src/state/state.h"
+#include "../unit.h"
 /*****************************************************************************/
-int update(state_t *state);
+int new_goomba(int x, int y, int dir_x, unit_t **head);
 /*****************************************************************************/
-#endif // UPDATE_H
-
+#endif // GOOMBA_H

@@ -2,10 +2,11 @@
 #     File Name           :     makefile                                      #
 #     Created By          :     Klas Segeljakt                                #
 #     Creation Date       :     [2016-10-23 13:10]                            #
-#     Last Modified       :     [2016-11-03 19:16]                     		  #
+#     Last Modified       :     [2016-11-08 23:44]                     		  #
 #     Description         :     Makefile of terminal-mario.                   #
 ###############################################################################
-CC = /usr/bin/gcc
+#CC = /usr/bin/gcc
+CC = gcc
 #------------------------------------------------------------------------------
 BIN = jump-squad
 #------------------------------------------------------------------------------
@@ -17,7 +18,8 @@ SRC = $(shell find $(PROJ_DIR)/src -name "*.c")
 #------------------------------------------------------------------------------
 #FLAGS += -Wall                          # Show all warnings
 FLAGS += -lncurses                      # Link ncurses library
-FLAGS += -framework AppKit
+FLAGS += -framework AppKit              # Input
+FLAGS += -fms-extensions                # Anonymous struct
 FLAGS += -Ofast                         # Full optimization
 FLAGS += -I $(PROJ_DIR)                 # Set project directory
 FLAGS += -o $(TARGET)                   # Output file

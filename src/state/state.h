@@ -33,5 +33,6 @@ struct state_s {
 state_t *init_state();
 void serialize(state_t *state);
 void free_state(state_t *state);
+void update(state_t *state);
 /*****************************************************************************/
 #endif // STATE_H

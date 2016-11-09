@@ -2,13 +2,13 @@
 *     File Name           :     cfg.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-28 21:14]                            *
-*     Last Modified       :     [2016-11-05 17:09]                            *
+*     Last Modified       :     [2016-11-08 23:01]                            *
 *     Description         :     Map config.                                   *
 ******************************************************************************/
 #ifndef MAP_CFG_H
 #define MAP_CFG_H
 /*****************************************************************************/
-#define MAX_LOCAL_PLAYERS 2
+#define BLOCKLENGTH 16
 /*****************************************************************************/
 enum EDITOR_CHARS {
     EDITOR_CHAR_SHROOM          = 'A',
@@ -126,19 +126,18 @@ enum OBJ_TYPES {
     /* Players */
     MARIO,
     /* Enemies */
-    SHROOM,
     GOOMBA,
     KOOPA,
-    PIRANHA_FLOWER,
+    PIRANHA,
     /* Items */
-    COIN,
-    STAR,
+    ITEM,
     /* Blocks */
-    NORMAL_BLOCK,
-    BREAKABLE_BLOCK,
+    INDESTRUCTIBLE,
+    DESTRUCTIBLE
 };
 /*---------------------------------------------------------------------------*/
 enum STATUS {
+    INVULNERABLE,
     DEAD
 };
 /*****************************************************************************/
