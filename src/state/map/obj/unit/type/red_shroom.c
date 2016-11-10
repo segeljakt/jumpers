@@ -1,20 +1,19 @@
 /******************************************************************************
-*     File Name           :     goomba.c                                      *
+*     File Name           :     red_shroom.c                                  *
 *     Created By          :     Klas Segeljakt                                *
-*     Creation Date       :     [2016-11-05 22:40]                            *
-*     Last Modified       :     [2016-11-09 00:16]                            *
-*     Description         :     Goomba unit.                                  *
+*     Creation Date       :     [2016-11-10 21:29]                            *
+*     Last Modified       :     [AUTO_UPDATE_BEFORE_SAVE]                     *
+*     Description         :     Red shroom.                                   *
 ******************************************************************************/
-#include "goomba.h"
+#include "../unit.h"
 #include <stdlib.h>
 /*****************************************************************************/
-static int
-update(unit_t *self, unit_t *player, unit_t *unit, block_t **block);
+static int update(unit_t *self, map_t *map);
 static int draw(WINDOW *pad, unit_t *obj);
-static int ctop(unit_t *player, unit_t *self);
+static int ctop(unit_t *player, unit_t *self, map_t *map);
 static int movement(unit_t *self);
 /*****************************************************************************/
-int new_goomba(int x, int y, int d_x, unit_t **head) {
+int new_red_shroom(int x, int y, int d_x, map_t *map) {
     unit_t *unit = malloc(sizeof(unit_t));
 
     unit->pos.x       = x;
@@ -28,19 +27,17 @@ int new_goomba(int x, int y, int d_x, unit_t **head) {
     unit->ctop        = ctop;
     unit->cside       = cdamage;        // Default
     unit->cbot        = cdamage;        // Default
-//    unit->serialize   = serialize_unit; // Default
     unit->draw        = draw;
 
-    unit->next        = *head;
+    unit->next        = map->unit;
 
-    *head = unit;
+    map->unit = unit;
 }
 /*---------------------------------------------------------------------------*/
-static int
-update(unit_t *self, unit_t *player, unit_t *unit, block_t **block) {
+static int update(unit_t *self, map_t *map) {
 
     movement(self);
-    block_collision(unit, block);
+    block_collision(self, map);
 
     return 0;
 }
@@ -70,13 +67,14 @@ static int movement(unit_t *self) {
     return 0;
 }
 /*---------------------------------------------------------------------------*/
-static int ctop(unit_t *player, unit_t *self) {
+static int ctop(unit_t *player, unit_t *self, map_t *map) {
     self->vel.y = 0;
     player->vel.y = MAX_VEL_Y;
     return 0;
 }
 /*---------------------------------------------------------------------------*/
 static int draw(WINDOW *pad, unit_t *unit) {
+    mvwaddch(pad, (int)unit->pre.y, (int)unit->pre.y, CHAR_NONE);
+    mvwaddch(pad, (int)unit->pos.y, (int)unit->pos.x, CHAR_GOOMBA);
     return 0;
 }
-/*****************************************************************************/

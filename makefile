@@ -2,7 +2,7 @@
 #     File Name           :     makefile                                      #
 #     Created By          :     Klas Segeljakt                                #
 #     Creation Date       :     [2016-10-23 13:10]                            #
-#     Last Modified       :     [2016-11-08 23:44]                     		  #
+#     Last Modified       :     [2016-11-10 14:02]                     		  #
 #     Description         :     Makefile of terminal-mario.                   #
 ###############################################################################
 #CC = /usr/bin/gcc

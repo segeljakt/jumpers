@@ -2,13 +2,14 @@
 *     File Name           :     player.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:17]                            *
-*     Last Modified       :     [2016-11-09 23:20]                            *
+*     Last Modified       :     [2016-11-10 18:43]                            *
 *     Description         :     Player character.                             *
 ******************************************************************************/
 #ifndef PLAYER_H
 #define PLAYER_H
 /*****************************************************************************/
 #include "../unit.h"            // Super-struct
+#include "src/state/map/obj/block/block.h"
 #include "src/state/input/keycodes.h"
 /*****************************************************************************/
 typedef struct keys_s keys_t;
@@ -27,6 +28,8 @@ struct player_s {
     keys_t keys;
 };
 /*****************************************************************************/
-int new_player(int p_num, int x, int y, player_t **head);
+int player_collision(unit_t *player, map_t *map);
+/*---------------------------------------------------------------------------*/
+int new_mario(int x, int y, int p_num, map_t *map);
 /*****************************************************************************/
 #endif // PLAYER_H

@@ -2,10 +2,11 @@
 *     File Name           :     unit.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 23:32]                            *
-*     Last Modified       :     [2016-11-09 22:14]                            *
+*     Last Modified       :     [2016-11-10 17:50]                            *
 *     Description         :     Default unit interface.                       *
 ******************************************************************************/
 #include "unit.h"
+#include <math.h>
 /*****************************************************************************/
 int unit_movement(unit_t *unit, int x, int y) {
     if(unit->dir.y == UP && unit->on_ground)  {
@@ -36,17 +37,10 @@ int unit_movement(unit_t *unit, int x, int y) {
     return 0;
 }
 /***************************************************************************/
-#include <math.h>
 /* http://tinyurl.com/pup2fcs */
-int unit_collision(unit_t *player, unit_t *iter) {
-    for(; iter != NULL; iter = iter->next) {
-        /* Unneccessary check in cases where player calls
-         * unit_collision(player, unit)
-         */
-        if(iter->pos.x == player->pos.x
-        && iter->pos.y == player->pos.y) {
-            continue;
-        }
+int unit_collision(unit_t *player, map_t *map) {
+    unit_t *iter;
+    for(iter = map->unit; iter != NULL; iter = iter->next) {
         float w = (player->len.x + iter->len.x)/2;
         float h = (player->len.y + iter->len.y)/2;
         float dx = player->cen.x - iter->cen.x;
@@ -60,18 +54,18 @@ int unit_collision(unit_t *player, unit_t *iter) {
             if (wy > hx) {
                 if (wy > -hx) {
                     /* bottom */
-                    iter->ctop(player, iter);
+                    iter->ctop(player, iter, map);
                 } else {
                     /* left */
-                    iter->cside(player, iter);
+                    iter->cside(player, iter, map);
                 }
             } else {
                 if (wy > -hx) {
                     /* right */
-                    iter->cside(player, iter);
+                    iter->cside(player, iter, map);
                 } else {
                     /* top */
-                    iter->cbot(player, iter);
+                    iter->cbot(player, iter, map);
                 }
             }
         }
@@ -79,40 +73,7 @@ int unit_collision(unit_t *player, unit_t *iter) {
     return 0;
 }
 /*****************************************************************************/
-int block_collision(unit_t *unit, block_t **blocks) {
-    block_t *block = &blocks[(int)unit->pos.y][(int)unit->pos.x];
-
-    if(block->has_collision) {
-        float w = (unit->len.x + BLOCKLENGTH)/2;
-        float h = (unit->len.y + BLOCKLENGTH)/2;
-        float dx = unit->cen.x - ((int)unit->pos.x+BLOCKLENGTH/2);
-        float dy = unit->cen.y - ((int)unit->pos.y+BLOCKLENGTH/2);
-
-        float wy = w*dy;
-        float hx = h*dx;
-
-        if (wy > hx) {
-            if (wy > -hx) {
-                /* bottom */
-                block->ctop(unit, block);
-            } else {
-                /* left */
-                block->cside(unit, block);
-            }
-        } else {
-            if (wy > -hx) {
-                /* right */
-                block->cside(unit, block);
-            } else {
-                /* top */
-                block->cbot(unit, block);
-            }
-        }
-    }
-    return 0;
-}
-/*****************************************************************************/
-inline int cdamage(unit_t *player, unit_t *self) {
+int cdamage(unit_t *player, unit_t *self, map_t *map) {
     if(player->status == INVULNERABLE) {
         self->status == DEAD;
     } else {
@@ -121,6 +82,6 @@ inline int cdamage(unit_t *player, unit_t *self) {
     return 0;
 }
 /*****************************************************************************/
-inline int cnone(unit_t *player, unit_t *self) {
+int cnone(unit_t *player, unit_t *self, map_t *map) {
     return 0;
 }

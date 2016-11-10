@@ -2,7 +2,7 @@
 *     File Name           :     state.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:34]                            *
-*     Last Modified       :     [2016-11-09 23:20]                            *
+*     Last Modified       :     [2016-11-10 19:02]                            *
 *     Description         :     Game state.                                   *
 ******************************************************************************/
 #ifndef STATE_H

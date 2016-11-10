@@ -36,7 +36,7 @@ state_t *init_state(int argc, char *argv[]) {
     float x = state->map->player->pos.x;
     float y = state->map->player->pos.y;
     for(i = 0; i < args->num_players; i++) {
-        new_player(i, x, y, &state->map->player);
+        new_mario(x, y, i, state->map);
     }
     /* Set difficulty */
     state->difficulty = args->difficulty;
@@ -51,10 +51,10 @@ void update(state_t *state) {
     unit_t *iter;
     map_t *map = state->map;
     for(iter = (unit_t*)map->player; iter != NULL; iter = iter->next) {
-        iter->update(iter, (unit_t*)map->player, map->unit, map->block);
+        iter->update(iter, map);
     }
     for(iter = map->unit; iter != NULL; iter = iter->next) {
-        iter->update(iter, (unit_t*)map->player, map->unit, map->block);
+        iter->update(iter, map);
     }
 }
 /*---------------------------------------------------------------------------*/

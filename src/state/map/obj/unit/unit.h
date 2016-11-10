@@ -2,7 +2,7 @@
 *     File Name           :     unit.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 12:29]                            *
-*     Last Modified       :     [2016-11-09 22:27]                            *
+*     Last Modified       :     [2016-11-10 21:42]                            *
 *     Description         :     Enemy/NPC/player interface                    *
 ******************************************************************************/
 #ifndef UNIT_H
@@ -14,7 +14,7 @@
 typedef struct body_s body_t;
 typedef struct vectf_s vectf_t;
 typedef struct vectc_s vectc_t;
-typedef int (*unit_collision_f)(unit_t *player, unit_t *self);
+typedef int (*unit_collision_f)(unit_t *player, unit_t *self, map_t *map);
 typedef int (*draw_unit_f)(WINDOW *pad, unit_t *self);
 /*****************************************************************************/
 enum DIRECTIONS {
@@ -65,10 +65,13 @@ typedef struct unit_s {
     unit_t *next;
 } unit_t;
 /*****************************************************************************/
-int unit_collision(unit_t *player, unit_t *unit);
-int block_collision(unit_t *player, block_t **block);
-int cdamage(unit_t *player, unit_t *self);
-int cnone(unit_t *player, unit_t *self);
-//int serialize_unit(unit_t *self);
+int unit_collision(unit_t *player, map_t *map);
+int cdamage(unit_t *player, unit_t *self, map_t *map);
+int cnone(unit_t *player, unit_t *self, map_t *map);
+/*---------------------------------------------------------------------------*/
+int new_goomba(int x, int y, int dir_x, map_t *map);
+int new_koopa(int x, int y, int dir_x, map_t *map);
+int new_piranha(int x, int y, int dir_x, map_t *map);
+int new_red_shroom(int y, int x, int dir_x, map_t *map);
 /*****************************************************************************/
 #endif // UNIT_H
