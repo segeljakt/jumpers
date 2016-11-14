@@ -2,7 +2,7 @@
 *     File Name           :     red_shroom.c                                  *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 21:29]                            *
-*     Last Modified       :     [AUTO_UPDATE_BEFORE_SAVE]                     *
+*     Last Modified       :     [2016-11-12 12:26]                            *
 *     Description         :     Red shroom.                                   *
 ******************************************************************************/
 #include "../unit.h"
@@ -13,7 +13,7 @@ static int draw(WINDOW *pad, unit_t *obj);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
 static int movement(unit_t *self);
 /*****************************************************************************/
-int new_red_shroom(int x, int y, int d_x, map_t *map) {
+int new_red_shroom(int y, int x, int d_x, map_t *map) {
     unit_t *unit = malloc(sizeof(unit_t));
 
     unit->pos.x       = x;
@@ -32,6 +32,7 @@ int new_red_shroom(int x, int y, int d_x, map_t *map) {
     unit->next        = map->unit;
 
     map->unit = unit;
+    return 0;
 }
 /*---------------------------------------------------------------------------*/
 static int update(unit_t *self, map_t *map) {

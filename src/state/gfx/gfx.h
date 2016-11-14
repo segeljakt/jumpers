@@ -2,7 +2,7 @@
 *     File Name           :     gfx.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-09 10:30]                            *
-*     Last Modified       :     [2016-11-10 19:08]                            *
+*     Last Modified       :     [2016-11-13 12:59]                            *
 *     Description         :     Ncurses graphics.                             *
 ******************************************************************************/
 #ifndef GFX_H
@@ -17,8 +17,7 @@ typedef struct gfx_s gfx_t;
 /*****************************************************************************/
 struct gfx_s {
     WINDOW *pad;
-    int draw_width;
-    int draw_height;
+    vecti_t draw;
     int camera;
 };
 /*****************************************************************************/

@@ -2,7 +2,7 @@
 *     File Name           :     mario.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-02 09:11]                            *
-*     Last Modified       :     [2016-11-10 17:55]                            *
+*     Last Modified       :     [2016-11-14 08:38]                            *
 *     Description         :     Player definition.                            *
 ******************************************************************************/
 #include "../player.h"
@@ -17,10 +17,17 @@ static const int  up[]     = {KEY__W,      KEY__UP};
 static const int  down[]   = {KEY__S,      KEY__DOWN};
 static const int  left[]   = {KEY__A,      KEY__LEFT};
 static const int  right[]  = {KEY__D,      KEY__RIGHT};
-static const int  sprint[] = {KEY__LSHIFT, KEY__RSHIFT};
+static const int  sprint[] = {KEY__LSHIFT, KEY__MINUS};
 static const int  color[]  = {COLOR_RED_NONE,  COLOR_BLUE_NONE};
 /*****************************************************************************/
-int new_mario(int p_num, int x, int y, map_t *map) {
+int parse_mario(int y, int x, char **raw_map, map_t *map) {
+    raw_map[y][x] = ' ';
+    new_mario(x, y, map);
+    return 0;
+}
+/*****************************************************************************/
+int new_mario(int y, int x, map_t *map) {
+    int p_num = map->num_players++;
     player_t *player = malloc(sizeof(player_t));
 
     player->color_attribute = COLOR_PAIR(color[p_num]) | A_STANDOUT;
@@ -47,6 +54,7 @@ int new_mario(int p_num, int x, int y, map_t *map) {
     player->next        = (unit_t*)map->player;
 
     map->player = player;
+    return 0;
 }
 /*---------------------------------------------------------------------------*/
 static int update(unit_t *self, map_t *map) {
@@ -94,10 +102,10 @@ static int ctop(unit_t *player, unit_t *self, map_t *map) {
     player->vel.y = MAX_VEL_Y;
     return 0;
 }
-/*---------------------------------------------------------------------------*/
-static int serialize(unit_t *unit) {
-    return 0;
-}
+///*---------------------------------------------------------------------------*/
+//static int serialize(unit_t *unit) {
+//    return 0;
+//}
 /*---------------------------------------------------------------------------*/
 static int draw(WINDOW *pad, unit_t *unit) {
     mvwaddch(pad, (int)unit->pre.x, (int)unit->pre.y, CHAR_MARIO);

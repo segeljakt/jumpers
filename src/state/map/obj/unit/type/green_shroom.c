@@ -1,9 +1,9 @@
 /******************************************************************************
-*     File Name           :     goomba.c                                      *
+*     File Name           :     green_shroom.c                                *
 *     Created By          :     Klas Segeljakt                                *
-*     Creation Date       :     [2016-11-05 22:40]                            *
-*     Last Modified       :     [2016-11-14 21:03]                            *
-*     Description         :     Goomba.                                       *
+*     Creation Date       :     [2016-11-13 13:44]                            *
+*     Last Modified       :     [2016-11-13 13:45]                            *
+*     Description         :     Green shroom unit.                            *
 ******************************************************************************/
 #include "../unit.h"
 #include <stdlib.h>
@@ -13,13 +13,7 @@ static int draw(WINDOW *pad, unit_t *obj);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
 static int movement(unit_t *self);
 /*****************************************************************************/
-int parse_goomba(int y, int x, char **raw_map, map_t *map) {
-    raw_map[y][x] = ' ';
-    new_goomba(x, y, LEFT, map);
-    return 0;
-}
-/*****************************************************************************/
-int new_goomba(int y, int x, int d_x, map_t *map) {
+int new_green_shroom(int y, int x, int d_x, map_t *map) {
     unit_t *unit = malloc(sizeof(unit_t));
 
     unit->pos.x       = x;

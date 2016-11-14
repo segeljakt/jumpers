@@ -2,7 +2,7 @@
 *     File Name           :     parser.c                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 22:35]                            *
-*     Last Modified       :     [2016-11-10 22:46]                            *
+*     Last Modified       :     [2016-11-13 13:56]                            *
 *     Description         :     Map parser.                                   *
 ******************************************************************************/
 #include "parser.h"
@@ -13,8 +13,37 @@
 /*****************************************************************************/
 static int parse_block(map_t *map, char **raw_map, int i, int j);
 static int parse_unit(map_t *map, char **raw_map, int i, int j);
-static int parse_player(map_t *map, char **raw_map, int i, int j);
 /*****************************************************************************/
+int parse_map(map_t *map, char **raw_map) {
+    int i;
+    int j;
+    int len;
+    for(i = 0; i < map->height; i++) {
+        len = strlen(raw_map[i]);
+        for(j = 0; j < map->width; j++) {
+            if(j > len) {
+                new_empty_block(i, j, CHAR_NONE, map);
+            } else {
+                if(parse_block(map, raw_map, i, j)) {
+                    raw_map[i][j] = CHAR_NONE;
+                    continue;
+                } else if(parse_unit(map, raw_map, i, j)) {
+                    continue;
+                }
+            }
+        }
+    }
+    for(i = 0; i < map->height; i++) {
+        len = strlen(raw_map[i]);
+        for(j = 0; j < len; j++) {
+            if(raw_map[i][j] != CHAR_NONE) {
+                new_empty_block(i, j, raw_map[i][j], map);
+            }
+        }
+    }
+    return 0;
+}
+/*---------------------------------------------------------------------------*/
 static int parse_block(map_t *map, char **raw_map, int i, int j) {
     switch(raw_map[i][j]) {
         case CHAR_NORMAL_BLOCK: {
@@ -30,40 +59,30 @@ static int parse_block(map_t *map, char **raw_map, int i, int j) {
             new_red_shroom_block(i, j, map);
         } case CHAR_STAR: {
             new_star_block(i, j, map);
+        } case CHAR_NONE: {
+            new_empty_block(i, j, CHAR_NONE, map);
+        } default: {
+            return 0;
         }
     }
-    return 0;
 }
 /*---------------------------------------------------------------------------*/
 static int parse_unit(map_t *map, char **raw_map, int i, int j) {
-
-    return 0;
-}
-/*---------------------------------------------------------------------------*/
-static int parse_player(map_t *map, char **raw_map, int i, int j) {
-
-    return 0;
-}
-/*---------------------------------------------------------------------------*/
-int parse_map(map_t *map, char **raw_map) {
-    int i;
-    int j;
-    int len;
-    for(i = 0; i < map->height; i++) {
-        len = strlen(raw_map[i]);
-        for(j = 0; j < map->width; j++) {
-            if(j > len) {
-                new_empty_block(i, j, map);
-            } else {
-                if(parse_block(map, raw_map, i, j)) {
-                    continue;
-                } else if(parse_unit(map, raw_map, i, j)) {
-                    continue;
-                } else if(parse_player(map, raw_map, i, j)) {
-                    continue;
-                }
-            }
+    switch(raw_map[i][j]) {
+        case CHAR_MARIO: {
+            parse_mario(i, j, raw_map, map);
+            return 1;
+        } case CHAR_GOOMBA: {
+            parse_goomba(i, j, raw_map, map);
+            return 1;
+        } case CHAR_KOOPA_T: {
+            parse_koopa(i, j, raw_map, map);
+            return 1;
+        } case CHAR_PIRANHA_T: {
+            parse_piranha(i, j, raw_map, map);
+            return 1;
+        } default: {
+            return 0;
         }
     }
-    return 0;
 }

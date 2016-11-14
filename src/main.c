@@ -2,7 +2,7 @@
 *     File Name           :     main.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:33]                            *
-*     Last Modified       :     [2016-11-09 23:30]                            *
+*     Last Modified       :     [2016-11-14 08:38]                            *
 *     Description         :     Game loop.                                    *
 ******************************************************************************/
 #include "src/state/state.h"
@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
     }
 
     while(read_input(state->map->player)) {
-        update(state);
-        serialize(state);
-        synchronize(state->online, state->change);
+//        update(state);
+//        serialize(state);
+//        synchronize(state->online, state->change);
         draw(state->map, state->gfx);
         napms(TICKRATE);
     }

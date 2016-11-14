@@ -2,23 +2,13 @@
 *     File Name           :     input.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 00:04]                            *
-*     Last Modified       :     [2016-11-08 13:36]                            *
+*     Last Modified       :     [2016-11-14 09:27]                            *
 *     Description         :     Read input.                                   *
 ******************************************************************************/
 #include "input.h"
 #include "src/state/input/keycodes.h"
+#include "src/state/input/readkey.h"
 /*****************************************************************************/
-//#ifdef __APPLE__
-//#include <ApplicationServices/ApplicationServices.h>
-//static int is_pressed(unsigned short key_code) {
-//    return CGEventSourceKeyState(kCGEventSourceStateHIDSystemState, key_code);
-//}
-//#endif
-static int is_pressed(unsigned short key_code) {
-
-    return 0;
-}
-/*---------------------------------------------------------------------------*/
 int read_input(player_t *iter) {
     // Exit
     if(is_pressed(KEY__X)) {

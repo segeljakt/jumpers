@@ -2,7 +2,7 @@
 *     File Name           :     sprite.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-28 21:14]                            *
-*     Last Modified       :     [2016-11-10 23:26]                            *
+*     Last Modified       :     [2016-11-12 12:07]                            *
 *     Description         :     Sprite config.                                *
 ******************************************************************************/
 #ifndef MAP_SPRITE_H
@@ -17,7 +17,7 @@ enum EDITOR_ONLY_CHARS {
 enum CHARS {
     CHAR_NONE                   = ' ',
     CHAR_SHROOM                 = 'A',
-    CHAR_QUESTION_BLOCK         = 'B',
+    CHAR_MYSTERY_BLOCK          = 'B',
     CHAR_COIN                   = 'C',
     CHAR_SWITCH                 = 'D',
     CHAR_NORMAL_BLOCK           = 'E',
@@ -38,8 +38,8 @@ enum CHARS {
     CHAR_HPIPE_BR               = 'g',
     CHAR_KOOPA_T                = 'P',
     CHAR_KOOPA_B                = 'c',
-    CHAR_PLANT_T                = 'Q',
-    CHAR_PLANT_B                = 'd',
+    CHAR_PIRANHA_T              = 'Q',
+    CHAR_PIRANHA_B              = 'd',
     CHAR_FLAG_L                 = 'j',
     CHAR_FLAG_R                 = 'l',
     CHAR_FLAGTOP                = 'K',
@@ -64,7 +64,8 @@ enum CHARS {
     CHAR_SHRUB_L                = 'w',
     CHAR_SHRUB_M                = 'x',
     CHAR_SHRUB_R                = 'y',
-    CHAR_MARIO                  = '?'
+    CHAR_MARIO                  = '?',
+    CHAR_USED_BLOCK             = ' '  // NOT YET ADDED
 };
 /*---------------------------------------------------------------------------*/
 enum COLLISION_TYPES {

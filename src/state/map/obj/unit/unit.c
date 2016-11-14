@@ -2,13 +2,20 @@
 *     File Name           :     unit.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 23:32]                            *
-*     Last Modified       :     [2016-11-10 17:50]                            *
+*     Last Modified       :     [2016-11-14 21:04]                            *
 *     Description         :     Default unit interface.                       *
 ******************************************************************************/
 #include "unit.h"
 #include <math.h>
 /*****************************************************************************/
-int unit_movement(unit_t *unit, int x, int y) {
+int kill_unit(unit_t **unit) {
+    unit_t *tmp = (*unit)->next;
+    free(*unit);
+    unit = &tmp;
+    return 0;
+}
+/*---------------------------------------------------------------------------*/
+int unit_movement(unit_t *unit, int y, int x) {
     if(unit->dir.y == UP && unit->on_ground)  {
         unit->vel.y = -MAX_VEL_Y;
         unit->on_ground = 0;
@@ -74,10 +81,10 @@ int unit_collision(unit_t *player, map_t *map) {
 }
 /*****************************************************************************/
 int cdamage(unit_t *player, unit_t *self, map_t *map) {
-    if(player->status == INVULNERABLE) {
-        self->status == DEAD;
+    if(player->status == INVINCIBLE) {
+        self->status = DEAD;
     } else {
-        player->status == DEAD;
+        player->status = DEAD;
     }
     return 0;
 }

@@ -2,7 +2,7 @@
 *     File Name           :     koopa.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 21:48]                            *
-*     Last Modified       :     [2016-11-10 22:02]                            *
+*     Last Modified       :     [2016-11-12 12:35]                            *
 *     Description         :     Koopa.                                        *
 ******************************************************************************/
 #include "../unit.h"
@@ -13,7 +13,16 @@ static int draw(WINDOW *pad, unit_t *obj);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
 static int movement(unit_t *self);
 /*****************************************************************************/
-int new_koopa(int x, int y, int d_x, map_t *map) {
+int parse_koopa(int y, int x, char **raw_map, map_t *map) {
+    raw_map[y][x] = ' ';
+    if(y+1 > map->height) {
+        raw_map[y+1][x] = ' ';
+        new_goomba(x, y, LEFT, map);
+    }
+    return 0;
+}
+/*****************************************************************************/
+int new_koopa(int y, int x, int d_x, map_t *map) {
     unit_t *unit = malloc(sizeof(unit_t));
 
     unit->pos.x       = x;
@@ -32,6 +41,7 @@ int new_koopa(int x, int y, int d_x, map_t *map) {
     unit->next        = map->unit;
 
     map->unit = unit;
+    return 0;
 }
 /*---------------------------------------------------------------------------*/
 static int update(unit_t *self, map_t *map) {

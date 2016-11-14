@@ -2,7 +2,7 @@
 *     File Name           :     cfg.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 00:44]                            *
-*     Last Modified       :     [2016-11-08 23:01]                            *
+*     Last Modified       :     [2016-11-13 20:53]                            *
 *     Description         :     Config file.                                  *
 ******************************************************************************/
 #ifndef CFG_H

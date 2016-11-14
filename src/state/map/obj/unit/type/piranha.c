@@ -13,7 +13,16 @@ static int draw(WINDOW *pad, unit_t *obj);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
 static int movement(unit_t *self);
 /*****************************************************************************/
-int new_piranha(int x, int y, int d_x, map_t *map) {
+int parse_piranha(int y, int x, char **raw_map, map_t *map) {
+    raw_map[y][x] = ' ';
+    if(y+1 > map->height) {
+        raw_map[y+1][x] = ' ';
+        new_piranha(x, y, LEFT, map);
+    }
+    return 0;
+}
+/*****************************************************************************/
+int new_piranha(int y, int x, int d_x, map_t *map) {
     unit_t *unit = malloc(sizeof(unit_t));
 
     unit->pos.x       = x;
@@ -32,6 +41,7 @@ int new_piranha(int x, int y, int d_x, map_t *map) {
     unit->next        = map->unit;
 
     map->unit = unit;
+    return 0;
 }
 /*---------------------------------------------------------------------------*/
 static int update(unit_t *self, map_t *map) {
