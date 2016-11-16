@@ -2,7 +2,7 @@
 *     File Name           :     readkey.c                                     *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-14 09:24]                            *
-*     Last Modified       :     [2016-11-14 09:31]                     *
+*     Last Modified       :     [2016-11-14 09:31]                            *
 *     Description         :     Read if a key is currently pressed.           *
 ******************************************************************************/
 #include "./readkey.h"

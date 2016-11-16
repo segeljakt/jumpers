@@ -2,10 +2,11 @@
 *     File Name           :     main.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:33]                            *
-*     Last Modified       :     [2016-11-14 08:38]                            *
+*     Last Modified       :     [2016-11-16 20:53]                            *
 *     Description         :     Game loop.                                    *
 ******************************************************************************/
 #include "src/state/state.h"
+#include <unistd.h>
 /*****************************************************************************/
 int main(int argc, char *argv[]) {
 
@@ -17,11 +18,11 @@ int main(int argc, char *argv[]) {
     }
 
     while(read_input(state->map->player)) {
-//        update(state);
+        update(state);
 //        serialize(state);
 //        synchronize(state->online, state->change);
-        draw(state->map, state->gfx);
-        napms(TICKRATE);
+        draw(state->map, state->tui);
+        usleep(TICKRATE*1000);
     }
 
     /* Teardown */

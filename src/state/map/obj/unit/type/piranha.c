@@ -17,7 +17,7 @@ int parse_piranha(int y, int x, char **raw_map, map_t *map) {
     raw_map[y][x] = ' ';
     if(y+1 > map->height) {
         raw_map[y+1][x] = ' ';
-        new_piranha(x, y, LEFT, map);
+        new_piranha(y, x, LEFT, map);
     }
     return 0;
 }

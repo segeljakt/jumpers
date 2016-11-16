@@ -2,7 +2,7 @@
 *     File Name           :     map.c                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-23 14:57]                            *
-*     Last Modified       :     [2016-11-13 20:53]                            *
+*     Last Modified       :     [2016-11-15 16:22]                            *
 *     Description         :     World map.                                    *
 ******************************************************************************/
 #include <stdio.h>
@@ -23,13 +23,24 @@ map_t *init_map(char *fp) {
 
     if(raw_map != NULL) {
         map->block = malloc(sizeof(block_t*)*map->height);
-        int i;
-        for(i = 0; i < map->height; i++) {
-            map->block[i] = malloc(sizeof(block_t)*map->width);
-        }
-        parse_map(map, raw_map);
         map->redraw_block = NULL;
         map->animate_unit = NULL;
+        map->unit = NULL;
+        map->player = NULL;
+        map->num_players = 0;
+        map->num_units = 0;
+        map->camera = 0;
+        map->block = malloc(sizeof(block_t*)*map->height);
+        int i;
+        int j;
+        for(i = 0; i < map->height; i++) {
+            map->block[i] = malloc(sizeof(block_t)*map->width);
+            for(j = 0; j < map->width; j++) {
+                map->block[i][j].status = UNASSIGNED;
+            }
+        }
+        parse_map(map, raw_map);
+        free(raw_map);
         return map;
     } else {
         free(map);
@@ -64,7 +75,7 @@ char **read_map(char *fp, int *height, int *width) {
         i++;
     }
     *height = i;
-//    (*height)--; TODO:FIX THIS
+    (*width)--;
     fclose(stream);
     return raw_map;
 }

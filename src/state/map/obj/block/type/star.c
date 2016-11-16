@@ -2,7 +2,7 @@
 *     File Name           :     star.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-12 12:19]                            *
-*     Last Modified       :     [2016-11-12 12:35]                            *
+*     Last Modified       :     [2016-11-15 16:22]                            *
 *     Description         :     Star block.                                   *
 ******************************************************************************/
 #include "../block.h"
@@ -10,8 +10,8 @@
 static int cbot(unit_t *player, block_t *self, map_t *map);
 /*****************************************************************************/
 int new_star_block(int y, int x, map_t *map) {
-    map->block[y][x].ctop = cblock;
-    map->block[y][x].cside = cblock;
+    map->block[y][x].ctop = cbtop;
+    map->block[y][x].cside = cbside;
     map->block[y][x].cbot = cbot;
     map->block[y][x].has_collision = 1;
     map->block[y][x].ch = CHAR_BRICK_BLOCK;

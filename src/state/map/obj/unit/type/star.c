@@ -2,7 +2,7 @@
 *     File Name           :     star.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-12 12:25]                            *
-*     Last Modified       :     [2016-11-14 21:03]                     *
+*     Last Modified       :     [2016-11-15 13:29]                            *
 *     Description         :     Star unit.                                    *
 ******************************************************************************/
 #include "../unit.h"

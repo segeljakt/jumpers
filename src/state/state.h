@@ -13,13 +13,13 @@
 //#include "src/state/online/online.h"
 #include "src/state/input/input.h"
 #include "src/state/serialize/serialize.h"
-#include "src/state/gfx/gfx.h"
+#include "src/state/tui/tui.h"
 /*****************************************************************************/
 typedef struct state_s state_t;
 /*****************************************************************************/
 struct state_s {
     map_t *map;
-    gfx_t *gfx;
+    tui_t *tui;
 //    online_t *online;
     change_t *change;
     char *fp;

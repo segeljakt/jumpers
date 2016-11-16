@@ -2,7 +2,7 @@
 *     File Name           :     parser.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 22:25]                            *
-*     Last Modified       :     [2016-11-10 22:46]                            *
+*     Last Modified       :     [2016-11-15 15:08]                            *
 *     Description         :     Map parser.                                   *
 ******************************************************************************/
 #include "src/state/map/map.h"

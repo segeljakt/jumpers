@@ -2,7 +2,7 @@
 *     File Name           :     parser.c                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 22:35]                            *
-*     Last Modified       :     [2016-11-13 13:56]                            *
+*     Last Modified       :     [2016-11-15 14:33]                            *
 *     Description         :     Map parser.                                   *
 ******************************************************************************/
 #include "parser.h"
@@ -21,13 +21,14 @@ int parse_map(map_t *map, char **raw_map) {
     for(i = 0; i < map->height; i++) {
         len = strlen(raw_map[i]);
         for(j = 0; j < map->width; j++) {
-            if(j > len) {
+            if(j > len) {                                       // Filler
                 new_empty_block(i, j, CHAR_NONE, map);
             } else {
-                if(parse_block(map, raw_map, i, j)) {
+                if(parse_block(map, raw_map, i, j)) {           // Block
                     raw_map[i][j] = CHAR_NONE;
+                    map->block[i][j].status |= ASSIGNED;
                     continue;
-                } else if(parse_unit(map, raw_map, i, j)) {
+                } else if(parse_unit(map, raw_map, i, j)) {     // Unit
                     continue;
                 }
             }
@@ -36,8 +37,10 @@ int parse_map(map_t *map, char **raw_map) {
     for(i = 0; i < map->height; i++) {
         len = strlen(raw_map[i]);
         for(j = 0; j < len; j++) {
-            if(raw_map[i][j] != CHAR_NONE) {
+            if(raw_map[i][j] != CHAR_NONE) {                    // Decoration
                 new_empty_block(i, j, raw_map[i][j], map);
+            } else if(map->block[i][j].status == UNASSIGNED) {  // Behind unit
+                new_empty_block(i, j, CHAR_NONE, map);
             }
         }
     }

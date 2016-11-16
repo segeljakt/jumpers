@@ -2,7 +2,7 @@
 *     File Name           :     input.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 00:04]                            *
-*     Last Modified       :     [2016-11-14 09:27]                            *
+*     Last Modified       :     [2016-11-16 17:04]                            *
 *     Description         :     Read input.                                   *
 ******************************************************************************/
 #include "input.h"

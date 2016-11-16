@@ -2,7 +2,7 @@
 *     File Name           :     unit.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 23:32]                            *
-*     Last Modified       :     [2016-11-14 21:04]                            *
+*     Last Modified       :     [2016-11-15 14:49]                            *
 *     Description         :     Default unit interface.                       *
 ******************************************************************************/
 #include "unit.h"
@@ -61,7 +61,8 @@ int unit_collision(unit_t *player, map_t *map) {
             if (wy > hx) {
                 if (wy > -hx) {
                     /* bottom */
-                    iter->ctop(player, iter, map);
+                    iter->cbot(player, iter, map);
+//                    iter->ctop(player, iter, map);
                 } else {
                     /* left */
                     iter->cside(player, iter, map);
@@ -72,7 +73,8 @@ int unit_collision(unit_t *player, map_t *map) {
                     iter->cside(player, iter, map);
                 } else {
                     /* top */
-                    iter->cbot(player, iter, map);
+                    iter->ctop(player, iter, map);
+//                    iter->cbot(player, iter, map);
                 }
             }
         }

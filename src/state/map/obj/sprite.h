@@ -2,13 +2,13 @@
 *     File Name           :     sprite.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-28 21:14]                            *
-*     Last Modified       :     [2016-11-12 12:07]                            *
+*     Last Modified       :     [2016-11-15 12:51]                            *
 *     Description         :     Sprite config.                                *
 ******************************************************************************/
 #ifndef MAP_SPRITE_H
 #define MAP_SPRITE_H
 /*****************************************************************************/
-#define BLOCKLENGTH 16
+#define BLOCKLENGTH 1
 /*****************************************************************************/
 enum EDITOR_ONLY_CHARS {
     EDITOR_CHAR_COIN_BLOCK      = 'U'
@@ -64,7 +64,7 @@ enum CHARS {
     CHAR_SHRUB_L                = 'w',
     CHAR_SHRUB_M                = 'x',
     CHAR_SHRUB_R                = 'y',
-    CHAR_MARIO                  = '?',
+    CHAR_MARIO                  = 'M',
     CHAR_USED_BLOCK             = ' '  // NOT YET ADDED
 };
 /*---------------------------------------------------------------------------*/

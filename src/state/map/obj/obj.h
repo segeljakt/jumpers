@@ -2,7 +2,7 @@
 *     File Name           :     obj.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-03 15:53]                            *
-*     Last Modified       :     [2016-11-12 23:01]                            *
+*     Last Modified       :     [2016-11-15 16:22]                            *
 *     Description         :     Object in map.                                *
 ******************************************************************************/
 #ifndef OBJ_H
@@ -24,11 +24,13 @@ typedef struct obj_s obj_t;
 typedef int (*update_f)(unit_t *, map_t *);
 /*****************************************************************************/
 enum STATUS {
-    INVINCIBLE = 0x01,
-    DEAD       = 0x02,
-    MODIFIED   = 0x03,
-    EMPTY      = 0x04,
-    BIG        = 0x05
+    UNASSIGNED = 0x00,
+    ASSIGNED   = 0x01,
+    INVINCIBLE = 0x02,
+    DEAD       = 0x03,
+    MODIFIED   = 0x04,
+    EMPTY      = 0x05,
+    BIG        = 0x06
 };
 /*---------------------------------------------------------------------------*/
 struct vectf_s {

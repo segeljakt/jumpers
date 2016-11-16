@@ -2,7 +2,7 @@
 *     File Name           :     block.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:12]                            *
-*     Last Modified       :     [2016-11-14 08:17]                            *
+*     Last Modified       :     [2016-11-16 18:10]                            *
 *     Description         :     Block in map.                                 *
 ******************************************************************************/
 #ifndef BLOCK_H
@@ -30,8 +30,10 @@ int kill_block(map_t *map, int y, int x);
 int block_collision(unit_t *player, map_t *map);
 int draw_block(WINDOW *pad, int i, int j, block_t *block);
 /*---------------------------------------------------------------------------*/
-int cblock(unit_t *player, block_t *self, map_t *map);
 int cbnone(unit_t *player, block_t *self, map_t *map);
+int cbtop(unit_t *player, block_t *self, map_t *map);
+int cbside(unit_t *player, block_t *self, map_t *map);
+int cbbot(unit_t *player, block_t *self, map_t *map);
 /*---------------------------------------------------------------------------*/
 int new_brick_block(int y, int x, map_t *map);
 int new_normal_block(int y, int x, int ch, map_t *map);

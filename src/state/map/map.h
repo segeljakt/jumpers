@@ -2,7 +2,7 @@
 *     File Name           :     map.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-23 14:57]                            *
-*     Last Modified       :     [2016-11-13 13:56]                            *
+*     Last Modified       :     [2016-11-15 12:55]                            *
 *     Description         :     World map.                                    *
 ******************************************************************************/
 #ifndef MAP_H

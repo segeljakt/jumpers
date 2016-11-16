@@ -11,8 +11,8 @@
 static int ccoin(unit_t *player, block_t *self, map_t *map);
 /*****************************************************************************/
 int new_coin_block(int y, int x, map_t *map) {
-    map->block[y][x].ctop = cblock;
-    map->block[y][x].cside = cblock;
+    map->block[y][x].ctop = cbtop;
+    map->block[y][x].cside = cbside;
     map->block[y][x].cbot = ccoin;
     map->block[y][x].has_collision = 1;
     map->block[y][x].ch = CHAR_BRICK_BLOCK;

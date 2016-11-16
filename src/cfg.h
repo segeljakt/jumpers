@@ -2,7 +2,7 @@
 *     File Name           :     cfg.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-30 00:44]                            *
-*     Last Modified       :     [2016-11-13 20:53]                            *
+*     Last Modified       :     [2016-11-16 17:37]                            *
 *     Description         :     Config file.                                  *
 ******************************************************************************/
 #ifndef CFG_H
@@ -18,8 +18,11 @@
                             //  4px       :  64x64  = 4096
                             //  2px       : 128x128 = 16384
                             //  1px       : 256x256 = 65536
+
+#define BLOCK_SPACING 2
+
 #define MAX_VEL_Y 0.725
-#define MAX_VEL_X 0.5
+#define MAX_VEL_X 0.2
 #define MAX_LOCAL_PLAYERS 2
 
 #define X_OFFSET 10
