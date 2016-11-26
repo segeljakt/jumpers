@@ -2,7 +2,7 @@
 *     File Name           :     block.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:12]                            *
-*     Last Modified       :     [2016-11-16 18:10]                            *
+*     Last Modified       :     [2016-11-21 12:35]                            *
 *     Description         :     Block in map.                                 *
 ******************************************************************************/
 #ifndef BLOCK_H
@@ -11,6 +11,7 @@
 #include "../obj.h"
 #include "src/state/map/obj/unit/unit.h"
 #include "src/state/map/map.h"
+#include "src/state/tui/tui.h"
 /*****************************************************************************/
 typedef int (*block_collision_f)(unit_t *player, block_t *self, map_t *map);
 typedef int (*spawn_f)(int, int, map_t*);
@@ -22,13 +23,12 @@ struct block_s {
     block_collision_f cbot;
     char has_collision;
     char ch;
-    void *special;
 };
 /*****************************************************************************/
 int kill_block(map_t *map, int y, int x);
 /*---------------------------------------------------------------------------*/
 int block_collision(unit_t *player, map_t *map);
-int draw_block(WINDOW *pad, int i, int j, block_t *block);
+int draw_block(tui_t *tui, int i, int j, block_t *block);
 /*---------------------------------------------------------------------------*/
 int cbnone(unit_t *player, block_t *self, map_t *map);
 int cbtop(unit_t *player, block_t *self, map_t *map);

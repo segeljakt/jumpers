@@ -2,7 +2,7 @@
 *     File Name           :     mario.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-02 09:11]                            *
-*     Last Modified       :     [2016-11-16 21:44]                            *
+*     Last Modified       :     [2016-11-23 15:14]                            *
 *     Description         :     Player definition.                            *
 ******************************************************************************/
 #include "../player.h"
@@ -10,7 +10,7 @@
 static int update(unit_t *self, map_t *map);
 static int movement(unit_t *self);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
-static int draw(WINDOW *pad, unit_t *self);
+static int draw(tui_t *tui, unit_t *self);
 /*****************************************************************************/
                            /*  PLAYER 1        PLAYER 2  */
 static const int  up[]     = {KEY__W,          KEY__UP};
@@ -30,7 +30,9 @@ int new_mario(int y, int x, map_t *map) {
     int p_num = map->num_players++;
     player_t *player = malloc(sizeof(player_t));
 
-    player->color_attribute = COLOR_PAIR(color[p_num]) | A_STANDOUT;
+    player->color_attribute = COLOR_PAIR(color[p_num]);
+
+    player->status      = 0;
 
     player->keys.up     = up[p_num];
     player->keys.down   = down[p_num];
@@ -42,12 +44,12 @@ int new_mario(int y, int x, map_t *map) {
     player->pos.y       = y;
     player->dir.x       = NONE;
     player->dir.y       = NONE;
-    player->vel.x       = 0;
+    player->vel.x       = MAX_VEL_X/2;
     player->vel.y       = 0;
     player->cen.x       = 0;
     player->cen.y       = 0;
-    player->pre.x       = 0;
-    player->pre.y       = 0;
+    player->pre.x       = x;
+    player->pre.y       = y;
     player->len.x       = 1;
     player->len.y       = 1;
     player->on_ground   = 0;
@@ -75,26 +77,42 @@ static int update(unit_t *self, map_t *map) {
 }
 /*---------------------------------------------------------------------------*/
 static int movement(unit_t *self) {
-    if(self->dir.y == UP && self->on_ground) {
-        self->vel.y = MAX_VEL_Y;
-        self->on_ground = 0;
+    /* Vertical movement */
+    if(self->dir.y == UP) {
+        if(self->on_ground && !(self->status & HAS_JUMPED)) {
+            self->vel.y = MAX_VEL_Y;
+            self->on_ground = 0;
+            self->status |= HAS_JUMPED;
+        }
+    } else if(self->vel.y > 0) {
+        self->vel.y -= GRAVITY*2;
+    } else {
+        self->status &= ~HAS_JUMPED;
     }
+
+    /* Horizontal movement */
     if(self->dir.x == RIGHT) {
-        self->vel.x += (self->vel.x < 0)? 0.5:X_ACCELERATION;
+        self->vel.x = (self->vel.x < 0)? 0:self->vel.x+X_ACCELERATION;
     } else if(self->dir.x == LEFT) {
-        self->vel.x -= (self->vel.x > 0)? 0.5:X_ACCELERATION;
+        self->vel.x = (self->vel.x > 0)? 0:self->vel.x-X_ACCELERATION;
     } else if(self->on_ground && (self->vel.x < 0.25 || self->vel.x > -0.25)) {
-        self->vel.x /= 1.5;
+//        self->vel.x /= 1.5;
     } else if(self->on_ground) {
-        self->vel.x /= 1.125;
+//        self->vel.x /= 1.125;
     }
 
     self->vel.y -= GRAVITY;
 
-    self->vel.x = (self->vel.x >  MAX_VEL_X)?  MAX_VEL_X : self->vel.x;
-    self->vel.x = (self->vel.x < -MAX_VEL_X)? -MAX_VEL_X : self->vel.x;
-    self->vel.y = (self->vel.x >  MAX_VEL_Y)?  MAX_VEL_Y : self->vel.y;
-    self->vel.y = (self->vel.x < -MAX_VEL_Y)? -MAX_VEL_Y : self->vel.y;
+    if(self->vel.x > MAX_VEL_X) {
+        self->vel.x = MAX_VEL_X;
+    } else if(self->vel.x < -MAX_VEL_X){
+        self->vel.x = -MAX_VEL_X;
+    }
+    if(self->vel.y > MAX_VEL_Y) {
+        self->vel.y = MAX_VEL_Y;
+    } else if(self->vel.y < -MAX_VEL_Y) {
+        self->vel.y = -MAX_VEL_Y;
+    }
 
     self->pre.x = self->pos.x;
     self->pre.y = self->pos.y;
@@ -115,14 +133,17 @@ static int ctop(unit_t *player, unit_t *self, map_t *map) {
 //    return 0;
 //}
 /*---------------------------------------------------------------------------*/
-static int draw(WINDOW *pad, unit_t *unit) {
-    mvwaddch(pad,
-            (int)(unit->pre.y*BLOCK_SPACING),
-            (int)(unit->pre.x*BLOCK_SPACING), CHAR_NONE);
-//    wattron(pad, unit->color_attribute);
-    mvwaddch(pad,
-            (int)(unit->pos.y*BLOCK_SPACING),
-            (int)(unit->pos.x*BLOCK_SPACING), CHAR_MARIO);
-//    wattroff(pad, unit->color_attribute);
+#include <math.h>
+static int draw(tui_t *tui, unit_t *unit) {
+    mvwaddch(tui->win,
+            unit->pre.y*TILE_SIZE,
+            (unit->pre.x-tui->camera)*TILE_SIZE,
+            CHAR_NONE);
+    wattron(tui->win, unit->color_attribute);
+    mvwaddch(tui->win,
+            unit->pos.y*TILE_SIZE,
+            (unit->pos.x-tui->camera)*TILE_SIZE,
+            CHAR_MARIO);
+    wattroff(tui->win, unit->color_attribute);
     return 0;
 }

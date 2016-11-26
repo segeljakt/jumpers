@@ -2,7 +2,7 @@
 *     File Name           :     map.c                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-23 14:57]                            *
-*     Last Modified       :     [2016-11-15 16:22]                            *
+*     Last Modified       :     [2016-11-23 12:26]                            *
 *     Description         :     World map.                                    *
 ******************************************************************************/
 #include <stdio.h>

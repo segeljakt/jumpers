@@ -2,7 +2,7 @@
 *     File Name           :     player.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:17]                            *
-*     Last Modified       :     [2016-11-12 11:43]                            *
+*     Last Modified       :     [2016-11-21 21:31]                            *
 *     Description         :     Player character.                             *
 ******************************************************************************/
 #ifndef PLAYER_H

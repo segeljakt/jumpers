@@ -2,7 +2,7 @@
 *     File Name           :     state.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:40]                            *
-*     Last Modified       :     [2016-11-16 17:09]                            *
+*     Last Modified       :     [2016-11-21 16:26]                            *
 *     Description         :     State functions.                              *
 ******************************************************************************/
 #include "state.h"
@@ -26,7 +26,6 @@ int setup_scr() {
     curs_set(0);
     raw();
 
-
     return 0;
 }
 /*---------------------------------------------------------------------------*/
@@ -45,17 +44,18 @@ int teardown_scr() {
 state_t *init_state(int argc, char *argv[]) {
     args_t *args = parse_args(argc, argv);
     state_t *state = malloc(sizeof(state_t));
+    setup_scr();
     /* Initialize map */
     state->fp = (args->fp == NULL)? strdup(default_fp):args->fp;
     if((state->map = init_map(state->fp)) == NULL) {
         free_state(state);
         free_args(args);
+        teardown_scr();
         return NULL;
     }
     /* Set difficulty */
     state->difficulty = args->difficulty;
     /* Draw map */
-    setup_scr();
     state->tui = init_tui(state->map);
     free_args(args);
     return state;

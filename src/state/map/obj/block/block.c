@@ -2,7 +2,7 @@
 *     File Name           :     block.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-08 11:00]                            *
-*     Last Modified       :     [2016-11-16 22:04]                            *
+*     Last Modified       :     [2016-11-22 11:44]                            *
 *     Description         :     Block interface.                              *
 ******************************************************************************/
 #include "block.h"
@@ -17,59 +17,54 @@ int kill_block(map_t *map, int y, int x) {
     return 0;
 }
 /*---------------------------------------------------------------------------*/
-int draw_block(WINDOW *pad, int y, int x, block_t *block) {
-//    wattron(pad, block->color_attribute);
-    mvwaddch(pad, y*BLOCK_SPACING, x*BLOCK_SPACING, block->ch);
-//    wattroff(pad, block->color_attribute);
+int draw_block(tui_t *tui, int y, int x, block_t *block) {
+//    wattron(tui->win, block->color_attribute);
+    mvwaddch(tui->win, y*TILE_SIZE, x*TILE_SIZE, block->ch);
+//    wattroff(tui->win, block->color_attribute);
     return 0;
 }
 /*---------------------------------------------------------------------------*/
 #include <math.h>
 int block_collision(unit_t *unit, map_t *map) {
-    vecti_t pre;
-    vecti_t pos;
-    vecti_t dif;
-    pre.x = (int)(unit->pre.x*BLOCK_SPACING);
-    pre.y = (int)(unit->pre.y*BLOCK_SPACING);
-    pos.x = (int)(unit->pos.x*BLOCK_SPACING);
-    pos.y = (int)(unit->pos.y*BLOCK_SPACING);
-    dif.x = pre.x-pos.x;
-    dif.y = pre.y-pos.y;
-    // X-collision
-    if((pre.x != pos.x)) {
-        int x = (dif.x < 0)? (int)round(unit->pos.x):(int)unit->pos.x;
-        int y = (dif.y < 0)? (int)round(unit->pre.y):(int)unit->pre.y;
-//        int y = (int)unit->pre.y;
-        block_t *xblock = &map->block[y][x];
-        if(xblock->has_collision) {
-            xblock->cside(unit, xblock, map);
-        }
-    }
+    char i;
+    char j;
+    char dx;
+    char dy;
+    char yaligned;
+    char xaligned;
+    dy = (int)(unit->pre.y*TILE_SIZE)-(int)(unit->pos.y*TILE_SIZE);
+    xaligned = ((int)(unit->pre.x*TILE_SIZE)%2==0);
+    yaligned = ((int)(unit->pre.y*TILE_SIZE)%2==0);
     // Y-collision
-    if((pre.y != pos.y)) {
-//        int x = (int)unit->pre.x;
-        int x = (dif.x < 0)? (int)round(unit->pre.x):(int)unit->pre.x;
-        int y = (dif.y < 0)? (int)round(unit->pos.y):(int)unit->pos.y;
-        block_t *yblock  = &map->block[y][x];
-        if(yblock->has_collision) {
-            if(unit->pos.y > unit->pre.y) {
-                yblock->ctop(unit, yblock, map);
-            } else {
-                yblock->cbot(unit, yblock, map);
+    if(yaligned) {
+        for(j = 0; j <= unit->len.x - xaligned; j++) { // dx==0 (if aligned)
+            int x = unit->pre.x+j;
+            int y = unit->pos.y;
+            if(dy < 0) { // dy < 0 (if moving downwards, check bottom)
+                y += unit->len.y;
+            }
+            block_t *yblock = &map->block[y][x];
+            if(yblock->has_collision) {
+                if(dy < 0) { // top
+                    yblock->ctop(unit, yblock, map);
+                } else {     // bot
+                    yblock->cbot(unit, yblock, map);
+                }
             }
         }
     }
-    // XY-collision
-    if((pre.x != pos.x) && (pre.y != pos.y)) {
-        int x = (dif.x < 0)? (int)round(unit->pos.x):(int)unit->pos.x;
-        int y = (dif.y < 0)? (int)round(unit->pos.y):(int)unit->pos.y;
-        block_t *xyblock = &map->block[y][x];
-        if(xyblock->has_collision) {
-            xyblock->cside(unit, xyblock, map);
-            if(unit->pos.y > unit->pre.y) {
-                xyblock->ctop(unit, xyblock, map);
-            } else {
-                xyblock->cbot(unit, xyblock, map);
+    dx = (int)(unit->pre.x*TILE_SIZE)-(int)(unit->pos.x*TILE_SIZE);
+    // X-collision
+    if(xaligned) {
+        for(i = 0; i <= unit->len.y - yaligned; i++) {
+            int y = unit->pre.y+i;
+            int x = unit->pos.x;
+            if(dx < 0) {
+                x += unit->len.x;
+            }
+            block_t *xblock = &map->block[y][x];
+            if(xblock->has_collision) {
+                xblock->cside(unit, xblock, map);
             }
         }
     }

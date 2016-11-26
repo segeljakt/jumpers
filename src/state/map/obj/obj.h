@@ -2,7 +2,7 @@
 *     File Name           :     obj.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-03 15:53]                            *
-*     Last Modified       :     [2016-11-15 16:22]                            *
+*     Last Modified       :     [2016-11-21 21:32]                            *
 *     Description         :     Object in map.                                *
 ******************************************************************************/
 #ifndef OBJ_H
@@ -30,7 +30,8 @@ enum STATUS {
     DEAD       = 0x03,
     MODIFIED   = 0x04,
     EMPTY      = 0x05,
-    BIG        = 0x06
+    BIG        = 0x06,
+    HAS_JUMPED = 0x07
 };
 /*---------------------------------------------------------------------------*/
 struct vectf_s {
@@ -49,8 +50,7 @@ struct vecti_s {
 };
 /*---------------------------------------------------------------------------*/
 struct obj_s {
-    char type;
-    char status;
+    int status;
     int color_attribute;
 };
 /*****************************************************************************/

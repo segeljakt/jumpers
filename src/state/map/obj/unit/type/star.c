@@ -9,7 +9,7 @@
 #include <stdlib.h>
 /*****************************************************************************/
 static int update(unit_t *self, map_t *map);
-static int draw(WINDOW *pad, unit_t *obj);
+static int draw(tui_t *tui, unit_t *obj);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
 static int movement(unit_t *self);
 /*****************************************************************************/
@@ -74,8 +74,8 @@ static int ctop(unit_t *player, unit_t *self, map_t *map) {
     return 0;
 }
 /*---------------------------------------------------------------------------*/
-static int draw(WINDOW *pad, unit_t *unit) {
-    mvwaddch(pad, (int)unit->pre.y, (int)unit->pre.y, CHAR_NONE);
-    mvwaddch(pad, (int)unit->pos.y, (int)unit->pos.x, CHAR_GOOMBA);
+static int draw(tui_t *tui, unit_t *unit) {
+    mvwaddch(tui->win, unit->pre.y, unit->pre.y, CHAR_NONE);
+    mvwaddch(tui->win, unit->pos.y, unit->pos.x, CHAR_GOOMBA);
     return 0;
 }

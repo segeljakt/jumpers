@@ -2,7 +2,7 @@
 *     File Name           :     unit.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 12:29]                            *
-*     Last Modified       :     [2016-11-12 21:42]                            *
+*     Last Modified       :     [2016-11-21 14:11]                            *
 *     Description         :     Enemy/NPC/player interface                    *
 ******************************************************************************/
 #ifndef UNIT_H
@@ -10,12 +10,13 @@
 /*****************************************************************************/
 #include "../obj.h"
 #include "src/state/map/obj/block/block.h"
+#include "src/state/tui/tui.h"
 /*****************************************************************************/
 typedef struct block_s block_t;
 /*---------------------------------------------------------------------------*/
 typedef struct body_s body_t;
 typedef int (*unit_collision_f)(unit_t *player, unit_t *self, map_t *map);
-typedef int (*draw_unit_f)(WINDOW *pad, unit_t *self);
+typedef int (*draw_unit_f)(tui_t *tui, unit_t *self);
 /*****************************************************************************/
 enum DIRECTIONS {
     LEFT,

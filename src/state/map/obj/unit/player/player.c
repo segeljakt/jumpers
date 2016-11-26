@@ -2,7 +2,7 @@
 *     File Name           :     player.c                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 17:45]                            *
-*     Last Modified       :     [2016-11-16 20:27]                            *
+*     Last Modified       :     [2016-11-23 12:27]                            *
 *     Description         :     Player interface.                             *
 ******************************************************************************/
 #include "player.h"

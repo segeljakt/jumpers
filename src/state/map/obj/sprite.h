@@ -2,7 +2,7 @@
 *     File Name           :     sprite.h                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-28 21:14]                            *
-*     Last Modified       :     [2016-11-15 12:51]                            *
+*     Last Modified       :     [2016-11-21 16:50]                            *
 *     Description         :     Sprite config.                                *
 ******************************************************************************/
 #ifndef MAP_SPRITE_H
@@ -90,8 +90,8 @@ enum OBJ_TYPES {
 };
 /*---------------------------------------------------------------------------*/
 enum FG_BG_COLORS {
-    COLOR_RED_NONE,
-    COLOR_BLUE_NONE
+    COLOR_RED_NONE  = 1,
+    COLOR_BLUE_NONE = 2
 };
 /*****************************************************************************/
 #endif // GRAPHICS_CFG_H

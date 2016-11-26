@@ -2,7 +2,7 @@
 *     File Name           :     brick.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 13:08]                            *
-*     Last Modified       :     [2016-11-15 13:19]                            *
+*     Last Modified       :     [2016-11-18 10:26]                            *
 *     Description         :     Brick block (breakable).                      *
 ******************************************************************************/
 #include "../block.h"

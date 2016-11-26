@@ -2,7 +2,7 @@
 #     File Name           :     makefile                                      #
 #     Created By          :     Klas Segeljakt                                #
 #     Creation Date       :     [2016-10-23 13:10]                            #
-#     Last Modified       :     [2016-11-16 20:32]                     		  #
+#     Last Modified       :     [2016-11-17 21:57]                     		  #
 #     Description         :     Makefile of terminal-mario.                   #
 ###############################################################################
 NAME = mario
@@ -35,6 +35,9 @@ all: $(SRC)
 debug: $(SRC)
 	$(CALL) -g -DDEBUG
 	gdb $(TARGET)
+
+ascii: $(SRC)
+	$(CALL) -DDEBUG
 run:
 	./levels/font/font.applescript
 	$(TARGET)
