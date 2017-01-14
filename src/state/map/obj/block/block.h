@@ -2,7 +2,7 @@
 *     File Name           :     block.h                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 22:12]                            *
-*     Last Modified       :     [2016-11-21 12:35]                            *
+*     Last Modified       :     [2016-11-27 18:27]                            *
 *     Description         :     Block in map.                                 *
 ******************************************************************************/
 #ifndef BLOCK_H
@@ -28,7 +28,7 @@ struct block_s {
 int kill_block(map_t *map, int y, int x);
 /*---------------------------------------------------------------------------*/
 int block_collision(unit_t *player, map_t *map);
-int draw_block(tui_t *tui, int i, int j, block_t *block);
+int draw_block(tui_t *tui, int i, int j, block_t *block, float camera);
 /*---------------------------------------------------------------------------*/
 int cbnone(unit_t *player, block_t *self, map_t *map);
 int cbtop(unit_t *player, block_t *self, map_t *map);

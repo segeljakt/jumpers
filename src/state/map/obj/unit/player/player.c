@@ -2,7 +2,7 @@
 *     File Name           :     player.c                                      *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-10 17:45]                            *
-*     Last Modified       :     [2016-11-23 12:27]                            *
+*     Last Modified       :     [2016-11-27 10:50]                            *
 *     Description         :     Player interface.                             *
 ******************************************************************************/
 #include "player.h"
@@ -47,3 +47,10 @@ int player_collision(unit_t *player, map_t *map) {
     return 0;
 }
 /*****************************************************************************/
+int camera_collision(unit_t *player, map_t *map) {
+    if(player->pos.x <= map->camera) {
+        player->pos.x = player->pre.x;
+        player->vel.x = 0;
+    }
+    return 0;
+}

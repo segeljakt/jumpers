@@ -2,7 +2,7 @@
 *     File Name           :     tui.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-09 10:30]                            *
-*     Last Modified       :     [2016-11-21 22:35]                            *
+*     Last Modified       :     [2016-11-30 21:35]                            *
 *     Description         :     Ncurses graphics.                             *
 ******************************************************************************/
 #ifndef TUI_H
@@ -15,7 +15,7 @@ typedef struct tui_s tui_t;
 /*****************************************************************************/
 struct tui_s {
     WINDOW *win;
-    int camera;
+    WINDOW *dbg;
 };
 /*****************************************************************************/
 tui_t *init_tui(map_t *map);

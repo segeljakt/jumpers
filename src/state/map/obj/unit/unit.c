@@ -2,7 +2,7 @@
 *     File Name           :     unit.c                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 23:32]                            *
-*     Last Modified       :     [2016-11-23 12:26]                            *
+*     Last Modified       :     [2017-01-09 15:57]                            *
 *     Description         :     Default unit interface.                       *
 ******************************************************************************/
 #include "unit.h"
@@ -92,5 +92,10 @@ int cdamage(unit_t *player, unit_t *self, map_t *map) {
 }
 /*****************************************************************************/
 int cnone(unit_t *player, unit_t *self, map_t *map) {
+    return 0;
+}
+/*****************************************************************************/
+inline int drawch(tui_t *tui, map_t *map, float y, float x, char ch) {
+    mvwaddch(tui->win, y*TILE_SIZE, (x-map->camera)*TILE_SIZE+1, ch);
     return 0;
 }

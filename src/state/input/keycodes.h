@@ -2,7 +2,7 @@
 *     File Name           :     keycodes.h                                    *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-01 00:10]                            *
-*     Last Modified       :     [2016-11-14 08:38]                            *
+*     Last Modified       :     [2017-01-09 21:21]                            *
 *     Description         :     Keycodes for Mac and Linux.                   *
 ******************************************************************************/
 #ifndef KEYCODES_H

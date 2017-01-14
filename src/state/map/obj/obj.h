@@ -2,7 +2,7 @@
 *     File Name           :     obj.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-03 15:53]                            *
-*     Last Modified       :     [2016-11-21 21:32]                            *
+*     Last Modified       :     [2017-01-09 15:57]                            *
 *     Description         :     Object in map.                                *
 ******************************************************************************/
 #ifndef OBJ_H
@@ -13,6 +13,7 @@
 #include "src/cfg.h"
 #include "src/state/map/map.h"
 #include "src/state/map/obj/sprite.h"
+#include "src/state/tui/tui.h"
 /* Forward declarations ******************************************************/
 typedef struct block_s block_t;
 typedef struct unit_s unit_t;
@@ -53,5 +54,6 @@ struct obj_s {
     int status;
     int color_attribute;
 };
+/*---------------------------------------------------------------------------*/
 /*****************************************************************************/
 #endif // OBJ_H

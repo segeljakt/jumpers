@@ -2,7 +2,7 @@
 *     File Name           :     mario.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-02 09:11]                            *
-*     Last Modified       :     [2016-11-23 15:14]                            *
+*     Last Modified       :     [2017-01-09 15:57]                            *
 *     Description         :     Player definition.                            *
 ******************************************************************************/
 #include "../player.h"
@@ -10,7 +10,7 @@
 static int update(unit_t *self, map_t *map);
 static int movement(unit_t *self);
 static int ctop(unit_t *player, unit_t *self, map_t *map);
-static int draw(tui_t *tui, unit_t *self);
+static int draw(tui_t *tui, unit_t *self, map_t *map);
 /*****************************************************************************/
                            /*  PLAYER 1        PLAYER 2  */
 static const int  up[]     = {KEY__W,          KEY__UP};
@@ -44,7 +44,7 @@ int new_mario(int y, int x, map_t *map) {
     player->pos.y       = y;
     player->dir.x       = NONE;
     player->dir.y       = NONE;
-    player->vel.x       = MAX_VEL_X/2;
+    player->vel.x       = 0;
     player->vel.y       = 0;
     player->cen.x       = 0;
     player->cen.y       = 0;
@@ -71,6 +71,7 @@ static int update(unit_t *self, map_t *map) {
     movement(self);
     unit_collision(self, map);
     player_collision(self, map);
+    camera_collision(self, map);
     block_collision(self, map);
 
     return 0;
@@ -96,9 +97,9 @@ static int movement(unit_t *self) {
     } else if(self->dir.x == LEFT) {
         self->vel.x = (self->vel.x > 0)? 0:self->vel.x-X_ACCELERATION;
     } else if(self->on_ground && (self->vel.x < 0.25 || self->vel.x > -0.25)) {
-//        self->vel.x /= 1.5;
+        self->vel.x /= 1.5;
     } else if(self->on_ground) {
-//        self->vel.x /= 1.125;
+        self->vel.x /= 1.125;
     }
 
     self->vel.y -= GRAVITY;
@@ -133,17 +134,9 @@ static int ctop(unit_t *player, unit_t *self, map_t *map) {
 //    return 0;
 //}
 /*---------------------------------------------------------------------------*/
-#include <math.h>
-static int draw(tui_t *tui, unit_t *unit) {
-    mvwaddch(tui->win,
-            unit->pre.y*TILE_SIZE,
-            (unit->pre.x-tui->camera)*TILE_SIZE,
-            CHAR_NONE);
+static int draw(tui_t *tui, unit_t *unit, map_t *map) {
     wattron(tui->win, unit->color_attribute);
-    mvwaddch(tui->win,
-            unit->pos.y*TILE_SIZE,
-            (unit->pos.x-tui->camera)*TILE_SIZE,
-            CHAR_MARIO);
+    drawch(tui, map, unit->pos.y, unit->pos.x, CHAR_MARIO);
     wattroff(tui->win, unit->color_attribute);
     return 0;
 }

@@ -2,7 +2,7 @@
 *     File Name           :     block.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-08 11:00]                            *
-*     Last Modified       :     [2016-11-22 11:44]                            *
+*     Last Modified       :     [2017-01-06 00:15]                            *
 *     Description         :     Block interface.                              *
 ******************************************************************************/
 #include "block.h"
@@ -17,7 +17,7 @@ int kill_block(map_t *map, int y, int x) {
     return 0;
 }
 /*---------------------------------------------------------------------------*/
-int draw_block(tui_t *tui, int y, int x, block_t *block) {
+int draw_block(tui_t *tui, int y, int x, block_t *block, float camera) {
 //    wattron(tui->win, block->color_attribute);
     mvwaddch(tui->win, y*TILE_SIZE, x*TILE_SIZE, block->ch);
 //    wattroff(tui->win, block->color_attribute);
@@ -32,23 +32,24 @@ int block_collision(unit_t *unit, map_t *map) {
     char dy;
     char yaligned;
     char xaligned;
+    block_t *block;
     dy = (int)(unit->pre.y*TILE_SIZE)-(int)(unit->pos.y*TILE_SIZE);
-    xaligned = ((int)(unit->pre.x*TILE_SIZE)%2==0);
-    yaligned = ((int)(unit->pre.y*TILE_SIZE)%2==0);
+    xaligned = ((int)(unit->pre.x*TILE_SIZE)%TILE_SIZE==0);
+    yaligned = ((int)(unit->pre.y*TILE_SIZE)%TILE_SIZE==0);
     // Y-collision
     if(yaligned) {
-        for(j = 0; j <= unit->len.x - xaligned; j++) { // dx==0 (if aligned)
+        for(j = 0; j <= unit->len.x - xaligned; j++) {
             int x = unit->pre.x+j;
             int y = unit->pos.y;
             if(dy < 0) { // dy < 0 (if moving downwards, check bottom)
                 y += unit->len.y;
             }
-            block_t *yblock = &map->block[y][x];
-            if(yblock->has_collision) {
+            block = &map->block[y][x];
+            if(block->has_collision) {
                 if(dy < 0) { // top
-                    yblock->ctop(unit, yblock, map);
+                    block->ctop(unit, block, map);
                 } else {     // bot
-                    yblock->cbot(unit, yblock, map);
+                    block->cbot(unit, block, map);
                 }
             }
         }
@@ -62,10 +63,20 @@ int block_collision(unit_t *unit, map_t *map) {
             if(dx < 0) {
                 x += unit->len.x;
             }
-            block_t *xblock = &map->block[y][x];
-            if(xblock->has_collision) {
-                xblock->cside(unit, xblock, map);
+            block = &map->block[y][x];
+            if(block->has_collision) {
+                block->cside(unit, block, map);
             }
+        }
+    }
+    // XY-collision
+    if(1) {
+        int y = unit->pos.y;
+        int x = unit->pos.x;
+        block = &map->block[y][x];
+        if(block->has_collision) {
+            block->ctop(unit, block, map);
+            block->cside(unit, block, map);
         }
     }
     return 0;

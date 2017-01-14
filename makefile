@@ -2,7 +2,7 @@
 #     File Name           :     makefile                                      #
 #     Created By          :     Klas Segeljakt                                #
 #     Creation Date       :     [2016-10-23 13:10]                            #
-#     Last Modified       :     [2016-11-17 21:57]                     		  #
+#     Last Modified       :     [2017-01-09 16:00]                     		  #
 #     Description         :     Makefile of terminal-mario.                   #
 ###############################################################################
 NAME = mario
@@ -22,7 +22,7 @@ FLAGS = -Wall                           # Show all warnings
 FLAGS += -lncurses                      # Link ncurses library
 FLAGS += -framework AppKit
 FLAGS += -fms-extensions                # Anonymous struct
-#FLAGS += -Ofast                        # Full optimization
+FLAGS += -Ofast                        # Full optimization
 FLAGS += -I $(PROJ_DIR)                 # Set project directory
 FLAGS += build/readkey.o
 FLAGS += -o $(TARGET)
@@ -35,9 +35,8 @@ all: $(SRC)
 debug: $(SRC)
 	$(CALL) -g -DDEBUG
 	gdb $(TARGET)
-
 ascii: $(SRC)
-	$(CALL) -DDEBUG
+	$(CALL) -g -DDEBUG
 run:
 	./levels/font/font.applescript
 	$(TARGET)

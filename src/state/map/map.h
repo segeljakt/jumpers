@@ -2,7 +2,7 @@
 *     File Name           :     map.h                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-23 14:57]                            *
-*     Last Modified       :     [2016-11-21 21:31]                            *
+*     Last Modified       :     [2016-11-27 10:49]                            *
 *     Description         :     World map.                                    *
 ******************************************************************************/
 #ifndef MAP_H
@@ -29,10 +29,11 @@ struct map_s {
     event_t *animate_unit;
     int num_players;
     int num_units;
-    int camera;
+    float camera;
 };
 /*****************************************************************************/
 map_t *init_map(char *filepath);
 void free_map(map_t *map);
+int focus_camera(map_t *map);
 /*****************************************************************************/
 #endif // MAP_H

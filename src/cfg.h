@@ -8,7 +8,7 @@
 #ifndef CFG_H
 #define CFG_H
 /*****************************************************************************/
-#define TICKRATE 15         // Update loop
+#define TICKRATE 16         // Update loop
 
 #define TILE_SIZE 2
 

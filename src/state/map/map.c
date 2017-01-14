@@ -2,7 +2,7 @@
 *     File Name           :     map.c                                         *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-23 14:57]                            *
-*     Last Modified       :     [2016-11-23 12:26]                            *
+*     Last Modified       :     [2016-11-30 22:27]                            *
 *     Description         :     World map.                                    *
 ******************************************************************************/
 #include <stdio.h>
@@ -82,4 +82,21 @@ char **read_map(char *fp, int *height, int *width) {
 /*---------------------------------------------------------------------------*/
 void free_map(map_t *map) {
 
+}
+/*---------------------------------------------------------------------------*/
+int focus_camera(map_t *map) {
+    unit_t *iter;
+    float mean = 0;
+    for(iter = (unit_t*)map->player; iter != NULL; iter = iter->next) {
+        mean += iter->pos.x;
+    }
+    mean = mean/map->num_players;
+    if(mean < WINDOW_WIDTH/2) {
+        map->camera = 0;
+    } else if(mean + WINDOW_WIDTH/2 > map->width) {
+        map->camera = map->width - WINDOW_WIDTH;
+    } else {
+        map->camera = mean - WINDOW_WIDTH/2;
+    }
+    return 0;
 }

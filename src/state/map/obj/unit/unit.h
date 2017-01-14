@@ -2,7 +2,7 @@
 *     File Name           :     unit.h                                        *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-11-05 12:29]                            *
-*     Last Modified       :     [2016-11-21 14:11]                            *
+*     Last Modified       :     [2017-01-09 15:57]                            *
 *     Description         :     Enemy/NPC/player interface                    *
 ******************************************************************************/
 #ifndef UNIT_H
@@ -16,7 +16,7 @@ typedef struct block_s block_t;
 /*---------------------------------------------------------------------------*/
 typedef struct body_s body_t;
 typedef int (*unit_collision_f)(unit_t *player, unit_t *self, map_t *map);
-typedef int (*draw_unit_f)(tui_t *tui, unit_t *self);
+typedef int (*draw_unit_f)(tui_t *tui, unit_t *self, map_t *map);
 /*****************************************************************************/
 enum DIRECTIONS {
     LEFT,
@@ -73,5 +73,7 @@ int new_piranha(int y, int x, int dir_x, map_t *map);
 int new_red_shroom(int y, int x, int dir_x, map_t *map);
 int new_green_shroom(int y, int x, int dir_x, map_t *map);
 int new_star(int y, int x, int dir, map_t *map);
+/*---------------------------------------------------------------------------*/
+int drawch(tui_t *tui, map_t *map, float y, float x, char ch);
 /*****************************************************************************/
 #endif // UNIT_H

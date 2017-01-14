@@ -2,7 +2,7 @@
 *     File Name           :     state.c                                       *
 *     Created By          :     Klas Segeljakt                                *
 *     Creation Date       :     [2016-10-29 23:40]                            *
-*     Last Modified       :     [2016-11-21 16:26]                            *
+*     Last Modified       :     [2017-01-09 23:31]                            *
 *     Description         :     State functions.                              *
 ******************************************************************************/
 #include "state.h"
@@ -33,10 +33,6 @@ int teardown_scr() {
 #ifndef DEBUG
     system("/Users/Klas/Git/my-projects/mario/levels/font/font.applescript");
 #endif // DEBUG
-    timeout(0);
-    // Clear all input
-    int c;
-    while((c = getch()) != '\n' && c != EOF) {}
     endwin();
     return 0;
 }
